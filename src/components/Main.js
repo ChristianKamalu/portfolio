@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import pic02 from '../images/pic02.jpg'
 import SelfPortrait from '../images/SelfPortrait.jpg'
-import Shrubs from '../images/Shrubs_Snippet.png'
+import Shrubs from '../images/Shrubs_snippet.png'
 
 class Main extends React.Component {
   render() {
