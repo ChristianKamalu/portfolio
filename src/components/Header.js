@@ -13,12 +13,14 @@ const Header = (props) => (
             </div>
         </div>
         <nav>
-            <ul>
-                <li><a href="javascript:;" onClick={() => {props.onOpenArticle('intro')}}>About</a></li>
-                <li><a href="javascript:;" onClick={() => {props.onOpenArticle('about')}}>Skills</a></li>
-                <li><a href="javascript:;" onClick={() => {props.onOpenArticle('work')}}>Projects</a></li>
-                <li><a href="javascript:;" onClick={() => {props.onOpenArticle('contact')}}>Contact</a></li>
-            </ul>
+            <div style={{padding: '1rem', border: '1px solid white', borderRadius: 5}}>
+                <ul>
+                    <li><a href="javascript:;" onClick={() => {props.onOpenArticle('intro')}}>About</a></li>
+                    <li><a href="javascript:;" onClick={() => {props.onOpenArticle('about')}}>Skills</a></li>
+                    <li><a href="javascript:;" onClick={() => {props.onOpenArticle('work')}}>Projects</a></li>
+                    <li><a href="javascript:;" onClick={() => {props.onOpenArticle('contact')}}>Contact</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
 )
