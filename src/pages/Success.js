@@ -5,6 +5,9 @@ const NotFoundPage = () => (
   <Layout>
     <h1>Success!!</h1>
     <p>Message sent.</p>
+    <a href='https://christiankamalu.netlify.com'>
+      <p style={{color: 'green'}}>Return to page</p>
+    </a>
   </Layout>
 )
 
