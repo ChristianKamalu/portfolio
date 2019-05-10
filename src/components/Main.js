@@ -77,22 +77,27 @@ class Main extends React.Component {
 
         <article id="contact" className={`${this.props.article === 'contact' ? 'active' : ''} ${this.props.articleTimeout ? 'timeout' : ''}`} style={{display:'none'}}>
           <h2 className="major">Contact</h2>
-          <form method="post" action="#">
+          <form method="post" name="contact" action="/success" data-netlify="true" netlify-honeypot="bot-field">
+            <input
+              type="hidden"
+              name="form-name"
+              value="contact"
+            />
             <div className="field half first">
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" id="name" />
+              <input type="text" name="name" id="name" required/>
             </div>
             <div className="field half">
               <label htmlFor="email">Email</label>
-              <input type="text" name="email" id="email" />
+              <input type="text" name="email" id="email" required/>
             </div>
             <div className="field">
               <label htmlFor="message">Message</label>
-              <textarea name="message" id="message" rows="4"></textarea>
+              <textarea name="message" id="message" rows="4" required></textarea>
             </div>
             <ul className="actions">
-              <li><input type="submit" value="Send Message" className="special" /></li>
-              <li><input type="reset" value="Reset" /></li>
+              <li><button type="submit" value="Send Message" className="special">Send Message</button></li>
+              <li><button type="reset" value="Reset">Reset</button></li>
             </ul>
           </form>
           <ul className="icons">
