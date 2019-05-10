@@ -77,7 +77,7 @@ class Main extends React.Component {
 
         <article id="contact" className={`${this.props.article === 'contact' ? 'active' : ''} ${this.props.articleTimeout ? 'timeout' : ''}`} style={{display:'none'}}>
           <h2 className="major">Contact</h2>
-          <form method="post" name="contact" action="/success" data-netlify="true" netlify-honeypot="bot-field">
+          <form method="post" name="contact" action="/Success/" data-netlify="true" netlify-honeypot="bot-field">
             <input
               type="hidden"
               name="form-name"
