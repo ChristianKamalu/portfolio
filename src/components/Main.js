@@ -28,7 +28,7 @@ class Main extends React.Component {
           <p>Shrubs is a textbook selling platform that was built as a personal project. In the span of two weeks, Shrubs was created to give all students, both current and previous, the ability to create personalized listings in order to purchase from and sell used textbooks to each other at a significantly lower price.</p>
           <span className="image main"><img src={pic02} alt="Group Project" /></span>
           <h3>Whiteboard:</h3>
-          <p>Whiteboard.</p>
+          <p>Based off of Canvas, we created Whiteboard to be a planning/tracking assistant allowing students and teachers alike to view assignments, quizzes and tests. Students have the ability to submit assignments with the teacher being able to receive, view, and grade submitted material. Whiteboard was a colaboration with fellow developers Brayden Allen, Tanner Scadden, and Ryan Reese. As a team, we set a goal to learn and implement technologies such as React Hooks and Amazon Web Services. We also utilized multiple tables with large quantities of data.</p>
           {close}
         </article>
 
