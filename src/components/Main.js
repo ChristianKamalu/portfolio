@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import pic02 from '../images/pic02.jpg'
-import SelfPortrait from '../images/SelfPortrait.jpg'
+import me2 from '../images/me2.jpg'
 import Shrubs from '../images/Shrubs_snippet.png'
 
 class Main extends React.Component {
@@ -15,7 +15,7 @@ class Main extends React.Component {
 
         <article id="intro" className={`${this.props.article === 'intro' ? 'active' : ''} ${this.props.articleTimeout ? 'timeout' : ''}`} style={{display:'none'}}>
           <h2 className="major">About</h2>
-          <span className="image main"><div style={{width: '100%', height: '15rem', backgroundImage: `url(${SelfPortrait})`, backgroundSize: 'cover', backgroundPositionY: '-6rem', backgroundRepeat: 'no-repeat'}}></div></span>
+          <span className="image main"><div style={{width: 'auto', height: '16rem', backgroundImage: `url(${me2})`, backgroundPositionY: '-4rem', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div></span>
           <p>Born and raised in Kaysville, Utah, I am the fourth of five children in my family. I enjoy spending time with family and friends. In my free time I like to play sports and spend time outside and I won't say no to a game of Halo.</p>
           <p>Growing up I always loved working with technology and had a knack for problem solving. The computer world is definitely the right place for me and I look forward to learning new things everyday.</p>
           {close}
@@ -27,8 +27,8 @@ class Main extends React.Component {
           <h3>Shrubs:</h3>
           <p>Shrubs is a textbook selling platform that was built as a personal project. In the span of two weeks, Shrubs was created to give all students, both current and previous, the ability to create personalized listings in order to purchase from and sell used textbooks to each other at a significantly lower price.</p>
           <span className="image main"><img src={pic02} alt="Group Project" /></span>
-          <h3>Group Project:</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+          <h3>Whiteboard:</h3>
+          <p>Whiteboard.</p>
           {close}
         </article>
 
