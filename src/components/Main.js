@@ -23,7 +23,7 @@ class Main extends React.Component {
         </article>
 
         <article id="work" className={`${this.props.article === 'work' ? 'active' : ''} ${this.props.articleTimeout ? 'timeout' : ''}`} style={{display:'none'}}>
-          <h2 className="major">Work</h2>
+          <h2 className="major">Projects</h2>
           <a href='http://165.22.149.91/#/'><span className="image main"><img src={Shrubs} alt="Shrubs" /></span></a>
           <h3>Shrubs:</h3>
           <p>Shrubs is a textbook selling platform that was built as a personal project. In the span of two weeks, Shrubs was created to give all students, both current and previous, the ability to create personalized listings in order to purchase from and sell used textbooks to each other at a significantly lower price.</p>
