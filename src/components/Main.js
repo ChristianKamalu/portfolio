@@ -23,12 +23,14 @@ class Main extends React.Component {
 
         <article id="work" className={`${this.props.article === 'work' ? 'active' : ''} ${this.props.articleTimeout ? 'timeout' : ''}`} style={{display:'none'}}>
           <h2 className="major">Projects</h2>
-          <a href='http://165.22.149.91/#/'><span className="image main"><img src={Shrubs} alt="Shrubs" /></span></a>
+          {/* <a href='http://165.22.149.91/#/'> */}
+          <span className="image main"><img src={Shrubs} alt="Shrubs" /></span></a>
           <h3>Shrubs:</h3>
           <p>Shrubs is a textbook selling platform that was built as a personal project. In the span of two weeks, Shrubs was created to give all students, both current and previous, the ability to create personalized listings in order to purchase from and sell used textbooks to each other at a significantly lower price.</p>
-          <a href='https://whiteboard.services'><span className="image main"><img src={whiteboard} alt="Group Project" /></span></a>
+          <a href='https://whiteboard.services'>
+            <span className="image main"><img src={whiteboard} alt="Group Project" /></span></a>
           <h3>Whiteboard:</h3>
-          <p>Based off of Canvas, Whiteboard is a planning/tracking assistant that allows students and teachers alike to view assignments, quizzes and tests. Students have the ability to submit assignments with the teacher being able to receive, view, and grade submitted material. Whiteboard was a colaboration with fellow developers Brayden Allen, Tanner Scadden, and Ryan Reese. As a team, we set a goal to learn and implement technologies such as React Hooks and Amazon Web Services. We also utilized multiple tables with large quantities of data.</p>
+          <p>Based off of Canvas, Whiteboard is a planning/tracking assistant that allows students and teachers alike to view assignments, quizzes and tests. Students have the ability to submit assignments with the teacher being able to receive, view, and grade submitted material. Whiteboard was a colaboration with fellow developers Brayden Allen, Tanner Scadden, and Ryan Reese. As a team, we set a goal to learn and implement technologies such as React Hooks and Amazon Web Services. We also utilized multiple tables with large quantities of data. To access this site, click on the picture. Username: christian Password: kamalu</p>
           {close}
         </article>
 
