@@ -27,7 +27,7 @@ class Main extends React.Component {
             <span className="image main"><img src={Shrubs} alt="Shrubs" /></span>
           {/* </a> */}
           <h3>Shrubs:</h3>
-          <p>Shrubs is a textbook selling platform that was built as a personal project. In the span of two weeks, Shrubs was created to give all students, both current and previous, the ability to create personalized listings in order to purchase from and sell used textbooks to each other at significantly better prices.</p>
+          <p>Shrubs is an upcoming textbook selling platform. In the span of two weeks, Shrubs was originally created to give all students, both current and previous, the ability to create personalized listings in order to purchase from and sell used textbooks to each other at significantly better prices. Due to it being an ongoing project, I do not have links up for it but if you are interested in checking it out, go ahead and send me a message in the "contact" section of my portfolio.</p>
           <h3>Technologies used:</h3>
           <div style={{width: '100%', display: 'flex', justifyContent: 'space-around'}}>
             <ul>
