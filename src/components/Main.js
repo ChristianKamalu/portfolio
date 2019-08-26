@@ -16,7 +16,7 @@ class Main extends React.Component {
         <article id="intro" className={`${this.props.article === 'intro' ? 'active' : ''} ${this.props.articleTimeout ? 'timeout' : ''}`} style={{display:'none'}}>
           <h2 className="major">About</h2>
           <span className="image main"><div style={{width: 'auto', height: '16rem', backgroundImage: `url(${me2})`, backgroundPositionY: '-4rem', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}></div></span>
-          <p>Born and raised in Kaysville, Utah, I am the fourth of five children in my family. I enjoy spending time with family and friends. In my free time I like to play sports and spend time outside and I won't say no to a game of Halo.</p>
+          <p>Born and raised in Kaysville, Utah, I am the fourth of five children in my family. I enjoy spending time with family and friends. In my free time I like to play sports and spend time outside and I won't say no to a game of Halo or Super Smash.</p>
           <p>Growing up I always loved working with technology and had a knack for problem solving. The computer world is definitely the right place for me and I look forward to learning new things everyday.</p>
           {close}
         </article>
@@ -28,11 +28,48 @@ class Main extends React.Component {
           {/* </a> */}
           <h3>Shrubs:</h3>
           <p>Shrubs is a textbook selling platform that was built as a personal project. In the span of two weeks, Shrubs was created to give all students, both current and previous, the ability to create personalized listings in order to purchase from and sell used textbooks to each other at significantly better prices.</p>
+          <h3>Technologies used:</h3>
+          <div style={{width: '100%', display: 'flex', justifyContent: 'space-around'}}>
+            <ul>
+              <li>Reactjs</li>
+              <li>Javascript</li>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>Node.js</li>
+              <li>PostgreSQL</li>
+            </ul>
+            <ul>
+              <li>Bcrypt.js</li>
+              <li>Stripe</li>
+              <li>Socket.io</li>
+              <li>MaterialUI</li>
+              <li>Amazon Web Services S3</li>
+            </ul>
+          </div>
           <a href='https://whiteboard.services'>
             <span className="image main"><img src={whiteboard} alt="Group Project" /></span>
           </a>
           <h3>Whiteboard:</h3>
           <p>Based off of Canvas, Whiteboard is a planning/tracking assistant that allows students and teachers alike to view assignments, quizzes and tests. Students have the ability to submit assignments with the teacher being able to receive, view, and grade submitted material. Whiteboard was a colaboration with fellow developers Brayden Allen, Tanner Scadden, and Ryan Reese. As a team, we set a goal to learn and implement technologies such as React Hooks and Amazon Web Services. We also utilized multiple tables with large quantities of data. To access this site, click on the picture. Username: christian Password: kamalu</p>
+          <h3>Technologies used:</h3>
+          <div style={{width: '100%', display: 'flex', justifyContent: 'space-around'}}>
+            <ul>
+              <li>Reactjs</li>
+              <li>Javascript</li>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>Node.js</li>
+              <li>PostgreSQL</li>
+            </ul>
+            <ul>
+              <li>Bcrypt.js</li>
+              <li>React-big-calendar</li>
+              <li>React-dnd</li>
+              <li>Moment.js</li>
+              <li>MaterialUI</li>
+              <li>Amazon Web Services S3</li>
+            </ul>
+          </div>
           {close}
         </article>
 
