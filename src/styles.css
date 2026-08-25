@@ -417,6 +417,8 @@ section { padding: 88px 0; }
 .bank-msg.bust { color: var(--red); }
 .bank-msg.doubles { color: var(--violet); }
 .bank-msg.banked { color: var(--green); }
+.bank-msg.grace { color: var(--muted); }
+.bank-roll { font-size: 11px; color: var(--dim); letter-spacing: 0.4px; }
 
 .bank-actions { display: flex; gap: 8px; }
 .mini-btn {
