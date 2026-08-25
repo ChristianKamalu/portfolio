@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { LINKS } from '../data';
+import Icon from './Icon';
 
 function TileRow({ word, offset }: { word: string; offset: number }) {
   return (
@@ -48,7 +49,9 @@ export default function Hero() {
       </div>
 
       <span className="shake-hint">
-        <button className="shake-btn" onClick={shake} aria-label="Shake the letter tiles">🎲</button>
+        <button className="shake-btn" onClick={shake} aria-label="Shake the letter tiles">
+          <Icon name="dice" size={20} />
+        </button>
         shake the board
       </span>
     </header>

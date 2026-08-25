@@ -7,6 +7,11 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   links). Edit content there, not in components. Skill names in `SKILLS` must
   match project `tech` spellings exactly — that string equality powers the
   hover cross-highlight (`HighlightContext`).
+- Icons are hand-rolled SVGs in `src/components/Icon.tsx` — one 24x24 grid,
+  `currentColor` so they inherit surrounding CSS, cubics instead of arcs (sweep
+  flags are unreadable later). No emoji in the UI: they render differently on
+  every platform and screen readers announce them ("game die"). Add a glyph to
+  `GLYPHS` rather than reaching for an icon library or a Unicode symbol.
 - `MiniBoggle`'s `WORDS` list is a public claim — every word must actually be
   traceable on `BOARD` (adjacent-tile paths, diagonals allowed, no reuse).
   Verify with a quick DFS script if you touch either.
@@ -14,6 +19,11 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   restores, and automated testing. Nav anchor clicks get smooth scrolling via
   `smoothAnchor` in App.tsx; `[id] { scroll-margin-top }` keeps targets clear
   of the sticky nav.
+- `useReveal` returns a class string, not a bare ref — the `revealed` state is
+  React state on purpose. Never set classes imperatively (`classList.add`) on
+  an element React re-renders with a computed `className`: React rewrites the
+  whole attribute and silently drops them. That bug once hid every project
+  card at `opacity: 0` the first time a skill chip was hovered.
 - Cards in the same project-grid row must keep constant height while idle —
   the NourishAI demo cycles content every 3.2s and once caused the whole row
   to jiggle (fixed with min-height + nowrap). Don't add idle animations that

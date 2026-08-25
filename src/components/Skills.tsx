@@ -4,10 +4,10 @@ import { useReveal } from '../useReveal';
 
 export default function Skills() {
   const { hoveredSkill, setHoveredSkill } = useHighlight();
-  const ref = useReveal();
+  const [ref, revealCls] = useReveal();
   return (
     <section id="skills" className="container">
-      <div ref={ref} className="reveal">
+      <div ref={ref} className={revealCls}>
         <p className="section-title">Skills</p>
         <h2 className="section-heading">The toolbox.</h2>
         <p className="skills-hint">Hover a skill to light up the projects it powers.</p>
