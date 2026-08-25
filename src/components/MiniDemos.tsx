@@ -28,11 +28,11 @@ export function BleDemo() {
 
 /* ── NourishAI: agent output flavor — cycling meal cards ── */
 const MEALS: { emoji: string; name: string; line: string; tag: string }[] = [
-  { emoji: '🍣', name: 'Salmon poke bowl', line: '620 kcal · 42g protein · ready in 15m', tag: 'agent pick' },
+  { emoji: '🍣', name: 'Salmon poke bowl', line: '620 kcal · 42g protein · ready in 15m', tag: 'planner pick' },
   { emoji: '🌯', name: 'Chipotle chicken wrap', line: '540 kcal · 38g protein · meal-prep friendly', tag: 'high protein' },
   { emoji: '🍜', name: 'Miso ramen, extra egg', line: '680 kcal · 31g protein · comfort tier: high', tag: 'from photo log' },
   { emoji: '🥗', name: 'Harvest grain salad', line: '480 kcal · 22g protein · pantry match 92%', tag: 'budget aware' },
-  { emoji: '🌮', name: 'Baja fish tacos ×3', line: '590 kcal · 35g protein · taco night unlocked', tag: 'agent pick' },
+  { emoji: '🌮', name: 'Baja fish tacos ×3', line: '590 kcal · 35g protein · taco night unlocked', tag: 'planner pick' },
 ];
 
 export function NourishDemo() {
@@ -44,7 +44,7 @@ export function NourishDemo() {
   const meal = MEALS[i];
   return (
     <div className="demo-box">
-      <div className="demo-label">What the agent serves</div>
+      <div className="demo-label">What the planner serves</div>
       <div className="nourish-demo meal-fade" key={i}>
         <div className="meal-emoji" aria-hidden="true">{meal.emoji}</div>
         <div className="meal-info">
@@ -52,29 +52,6 @@ export function NourishDemo() {
           <div className="meal-line">{meal.line}</div>
           <span className="meal-tag">{meal.tag}</span>
         </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── SoundWave: an equalizer that dances harder on hover ── */
-const BARS = [62, 88, 45, 96, 70, 52, 90, 40, 78, 58, 92, 66];
-
-export function WaveDemo() {
-  return (
-    <div className="demo-box">
-      <div className="demo-label">Crank it</div>
-      <div className="wave-demo" aria-hidden="true">
-        {BARS.map((peak, i) => (
-          <span
-            key={i}
-            className="wave-bar"
-            style={{
-              ['--bar-peak' as string]: `${peak}%`,
-              ['--bar-delay' as string]: `${(i * 0.09).toFixed(2)}s`,
-            }}
-          />
-        ))}
       </div>
     </div>
   );

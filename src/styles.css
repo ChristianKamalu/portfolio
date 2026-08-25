@@ -343,6 +343,7 @@ section { padding: 88px 0; }
   animation: pulse-dot 1.8s ease-out infinite;
 }
 .badge.wip { color: var(--violet); border-color: rgba(139, 124, 248, 0.4); background: var(--violet-soft); }
+.badge.retired { color: var(--dim); border-color: var(--border-bright); background: var(--bg-elevated); }
 .badge.wip .pulse-dot { background: var(--violet); }
 @keyframes pulse-dot {
   0% { box-shadow: 0 0 0 0 rgba(47, 191, 113, 0.55); }
@@ -540,23 +541,6 @@ section { padding: 88px 0; }
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--green);
-}
-
-/* ─────────────── soundwave demo ─────────────── */
-.wave-demo { display: flex; align-items: flex-end; gap: 5px; height: 46px; padding: 4px 2px; }
-.wave-bar {
-  flex: 1;
-  background: linear-gradient(to top, var(--amber), var(--violet));
-  border-radius: 3px;
-  height: 18%;
-  animation: wave-dance 1.1s ease-in-out infinite;
-  animation-delay: var(--bar-delay);
-  transform-origin: bottom;
-}
-.project-card:hover .wave-bar { animation-duration: 0.55s; }
-@keyframes wave-dance {
-  0%, 100% { height: 18%; }
-  50% { height: var(--bar-peak); }
 }
 
 /* ───────────────────────── experience ───────────────────────── */

@@ -3,7 +3,7 @@ import { useHighlight } from '../HighlightContext';
 import { useReveal } from '../useReveal';
 import MiniBank from './MiniBank';
 import MiniBoggle from './MiniBoggle';
-import { BleDemo, NourishDemo, WaveDemo } from './MiniDemos';
+import { BleDemo, NourishDemo } from './MiniDemos';
 
 function Demo({ kind }: { kind: NonNullable<Project['demo']> }) {
   switch (kind) {
@@ -11,7 +11,6 @@ function Demo({ kind }: { kind: NonNullable<Project['demo']> }) {
     case 'boggle': return <MiniBoggle />;
     case 'ble': return <BleDemo />;
     case 'nourish': return <NourishDemo />;
-    case 'wave': return <WaveDemo />;
   }
 }
 
@@ -29,7 +28,10 @@ function ProjectCard({ project }: { project: Project }) {
           <p className="project-tagline">{project.tagline}</p>
         </div>
         {project.status ? (
-          <span className="badge wip"><span className="pulse-dot" />{project.status}</span>
+          <span className={`badge ${project.status === 'Retired' ? 'retired' : 'wip'}`}>
+            {project.status !== 'Retired' && <span className="pulse-dot" />}
+            {project.status}
+          </span>
         ) : project.link ? (
           <span className="badge"><span className="pulse-dot" />Live</span>
         ) : null}

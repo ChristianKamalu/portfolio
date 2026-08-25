@@ -21,8 +21,8 @@ export default function About() {
               to the app store build that talks to it.
             </p>
             <ul className="now-list">
-              <li><span className="spark">▸</span> Currently: shipping the shared React component library at Delinea</li>
-              <li><span className="spark">▸</span> Nights &amp; weekends: NourishAI, multiplayer games, and a BLE beacon</li>
+              <li><span className="spark">▸</span> Currently: open to my next role — let&rsquo;s talk</li>
+              <li><span className="spark">▸</span> Meanwhile: heads-down on NourishAI, a BLE beacon, and multiplayer games</li>
               <li><span className="spark">▸</span> Always: an LLM in the loop — it&rsquo;s how this site got built, too</li>
             </ul>
           </div>

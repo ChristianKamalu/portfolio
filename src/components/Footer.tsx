@@ -8,7 +8,7 @@ export default function Footer() {
       <div ref={ref} className="footer-card reveal">
         <h2>Let&rsquo;s build something.</h2>
         <p>
-          Whether it&rsquo;s an AI agent that needs to behave, a multiplayer lobby that
+          Whether it&rsquo;s an AI integration that needs to behave, a multiplayer lobby that
           needs to not fall over, or a product that just needs to ship — I&rsquo;m in.
         </p>
         <div className="footer-links">
