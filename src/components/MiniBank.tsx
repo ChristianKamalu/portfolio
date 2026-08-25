@@ -68,7 +68,9 @@ export default function MiniBank() {
       if (rollNum < GRACE_ROLLS) {
         // Grace window: no busts, and doubles count face value — not ×2.
         if (a === 1 || b === 1) {
-          const add = (a === 1 ? 0 : a) + (b === 1 ? 0 : b);
+          // The 1 is harmless here, not worthless — it scores its pip like any
+          // other face. Every scoring path in this component adds `a + b`.
+          const add = a + b;
           setPot(pot + add);
           setMsg({ kind: 'grace', text: `Grace roll — 1s don’t bust yet (+${add})` });
         } else if (a === b) {
