@@ -10,6 +10,8 @@ const PIPS: Record<number, number[]> = {
   6: [0, 2, 3, 5, 6, 8],
 };
 
+const GRACE_ROLLS = 3;
+
 function Die({ value, rolling, bust }: { value: number; rolling: boolean; bust: boolean }) {
   const on = PIPS[value] ?? [];
   return (
@@ -22,15 +24,17 @@ function Die({ value, rolling, bust }: { value: number; rolling: boolean; bust: 
 }
 
 /**
- * A pocket-sized round of Bank: roll to grow the pot, any 1 busts it,
- * doubles double it, bank to keep it — the real game's two-dice ruleset.
+ * A pocket-sized turn of Bank with the real ruleset, grace window included:
+ * the first 3 rolls can't bust and doubles count their face value; after
+ * that, any 1 busts the pot and doubles multiply it. Bank to keep it.
  */
 export default function MiniBank() {
   const [dice, setDice] = useState<[number, number]>([3, 5]);
   const [pot, setPot] = useState(0);
   const [banked, setBanked] = useState(0);
+  const [rollNum, setRollNum] = useState(0); // rolls taken this turn
   const [rolling, setRolling] = useState(false);
-  const [msg, setMsg] = useState<{ kind: 'bust' | 'doubles' | 'banked'; text: string } | null>(null);
+  const [msg, setMsg] = useState<{ kind: 'bust' | 'doubles' | 'banked' | 'grace'; text: string } | null>(null);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const flickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -41,6 +45,7 @@ export default function MiniBank() {
   const later = (fn: () => void, ms: number) => timers.current.push(setTimeout(fn, ms));
 
   const isBust = !rolling && msg?.kind === 'bust';
+  const inGrace = rollNum < GRACE_ROLLS;
 
   const roll = () => {
     if (rolling) return;
@@ -57,21 +62,33 @@ export default function MiniBank() {
       const b = 1 + Math.floor(Math.random() * 6);
       setDice([a, b]);
       setRolling(false);
-      // `pot` is the value from the render this roll started in — nothing
-      // else can change it mid-roll (both buttons are disabled while rolling).
-      if (a === 1 || b === 1) {
+      // `pot`/`rollNum` are from the render this roll started in — nothing
+      // else can change them mid-roll (both buttons are disabled while rolling).
+      if (rollNum < GRACE_ROLLS) {
+        // Grace window: no busts, and doubles count face value — not ×2.
+        if (a === 1 || b === 1) {
+          const add = (a === 1 ? 0 : a) + (b === 1 ? 0 : b);
+          setPot(pot + add);
+          setMsg({ kind: 'grace', text: `Grace roll — 1s don’t bust yet (+${add})` });
+        } else if (a === b) {
+          setPot(pot + a + b);
+          setMsg({ kind: 'grace', text: `Doubles in the grace window — face value (+${a + b})` });
+        } else {
+          setPot(pot + a + b);
+        }
+      } else if (a === 1 || b === 1) {
         setPot(0);
+        setRollNum(0);
         setMsg({ kind: 'bust', text: 'BUST! The pot is gone.' });
+        return;
       } else if (a === b) {
         const doubled = pot * 2;
         setPot(doubled);
-        setMsg({
-          kind: 'doubles',
-          text: doubled === 0 ? 'Doubles… of nothing. Roll on!' : `DOUBLES! Pot ×2 → ${doubled}`,
-        });
+        setMsg({ kind: 'doubles', text: `DOUBLES! Pot ×2 → ${doubled}` });
       } else {
         setPot(pot + a + b);
       }
+      setRollNum(rollNum + 1);
     }, 550);
   };
 
@@ -80,6 +97,7 @@ export default function MiniBank() {
     setBanked((s) => s + pot);
     setMsg({ kind: 'banked', text: `Banked ${pot}. Safe!` });
     setPot(0);
+    setRollNum(0);
   };
 
   return (
@@ -91,11 +109,16 @@ export default function MiniBank() {
         <div className="bank-scores">
           <span className="bank-pot">Pot: {pot}</span>
           <span className="bank-banked">Banked: {banked}</span>
+          <span className="bank-roll">
+            {inGrace
+              ? `grace: ${GRACE_ROLLS - rollNum} safe ${GRACE_ROLLS - rollNum === 1 ? 'roll' : 'rolls'} left`
+              : '1s bust · doubles ×2'}
+          </span>
         </div>
       </div>
       {/* Own full-width row — inside the narrow scores column this wrapped on
           phones and slid behind the buttons (fixed-height overflow). */}
-      <span className={`bank-msg ${msg?.kind ?? ''}`}>{msg?.text ?? ' '}</span>
+      <span className={`bank-msg ${msg?.kind ?? ''}`}>{msg?.text ?? ' '}</span>
       <div className="bank-actions">
         <button className="mini-btn" onClick={roll} disabled={rolling}>
           {rolling ? 'Rolling…' : 'Roll 🎲'}
