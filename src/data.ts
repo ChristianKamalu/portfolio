@@ -28,6 +28,18 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    id: 'ble',
+    name: 'BLE Beacon Device',
+    tagline: 'From bare metal to the App Store',
+    description:
+      'Self-taught embedded C to build a Bluetooth Low Energy device end to end: firmware on a ' +
+      'TI CC2340R5 MCU with a deep-sleep power model targeting 5+ year battery life, a SwiftUI iOS ' +
+      'companion shipping to TestFlight via GitHub Actions, and a Kotlin Android client in progress.',
+    tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'GitHub Actions'],
+    status: 'In progress',
+    demo: 'ble',
+  },
+  {
     id: 'nourishai',
     name: 'NourishAI',
     tagline: 'AI meal planning, end to end',
@@ -64,18 +76,6 @@ export const PROJECTS: Project[] = [
     link: 'https://boggle.christiankamalu.com',
     linkLabel: 'Play with friends',
     demo: 'boggle',
-  },
-  {
-    id: 'ble',
-    name: 'BLE Beacon Device',
-    tagline: 'From bare metal to the App Store',
-    description:
-      'Self-taught embedded C to build a Bluetooth Low Energy device end to end: firmware on a ' +
-      'TI CC2340R5 MCU with a deep-sleep power model targeting 5+ year battery life, a SwiftUI iOS ' +
-      'companion shipping to TestFlight via GitHub Actions, and a Kotlin Android client in progress.',
-    tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'GitHub Actions'],
-    status: 'In progress',
-    demo: 'ble',
   },
   {
     id: 'tradeangel',
