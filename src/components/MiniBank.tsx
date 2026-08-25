@@ -23,7 +23,7 @@ function Die({ value, rolling, bust }: { value: number; rolling: boolean; bust: 
 
 /**
  * A pocket-sized round of Bank: roll to grow the pot, any 1 busts it,
- * doubles double it, bank to keep it. Same rules as the real game's default.
+ * doubles double it, bank to keep it — the real game's two-dice ruleset.
  */
 export default function MiniBank() {
   const [dice, setDice] = useState<[number, number]>([3, 5]);
@@ -91,9 +91,11 @@ export default function MiniBank() {
         <div className="bank-scores">
           <span className="bank-pot">Pot: {pot}</span>
           <span className="bank-banked">Banked: {banked}</span>
-          <span className={`bank-msg ${msg?.kind ?? ''}`}>{msg?.text ?? ' '}</span>
         </div>
       </div>
+      {/* Own full-width row — inside the narrow scores column this wrapped on
+          phones and slid behind the buttons (fixed-height overflow). */}
+      <span className={`bank-msg ${msg?.kind ?? ''}`}>{msg?.text ?? ' '}</span>
       <div className="bank-actions">
         <button className="mini-btn" onClick={roll} disabled={rolling}>
           {rolling ? 'Rolling…' : 'Roll 🎲'}
