@@ -16,7 +16,11 @@ function smoothAnchor(e: MouseEvent<HTMLElement>) {
   const target = document.querySelector(link.getAttribute('href')!);
   if (!target) return;
   e.preventDefault();
-  target.scrollIntoView({ behavior: 'smooth' });
+  // An explicit `behavior` beats the reduced-motion block in styles.css —
+  // browsers only relax the CSS `scroll-behavior` property. Read the pref per
+  // click so a mid-session OS change takes effect immediately.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
   history.replaceState(null, '', link.getAttribute('href')!);
 }
 
