@@ -2,10 +2,10 @@ import { EXPERIENCE } from '../data';
 import { useReveal } from '../useReveal';
 
 export default function Experience() {
-  const ref = useReveal();
+  const [ref, revealCls] = useReveal();
   return (
     <section id="experience" className="container">
-      <div ref={ref} className="reveal">
+      <div ref={ref} className={revealCls}>
         <p className="section-title">Experience</p>
         <h2 className="section-heading">Where I&rsquo;ve shipped.</h2>
         <div className="timeline">

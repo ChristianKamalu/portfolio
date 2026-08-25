@@ -1,6 +1,7 @@
 import { PROJECTS, type Project } from '../data';
 import { useHighlight } from '../HighlightContext';
 import { useReveal } from '../useReveal';
+import Icon from './Icon';
 import MiniBank from './MiniBank';
 import MiniBoggle from './MiniBoggle';
 import { BleDemo, NourishDemo } from './MiniDemos';
@@ -16,12 +17,12 @@ function Demo({ kind }: { kind: NonNullable<Project['demo']> }) {
 
 function ProjectCard({ project }: { project: Project }) {
   const { hoveredSkill, setHoveredSkill } = useHighlight();
-  const ref = useReveal<HTMLElement>();
+  const [ref, revealCls] = useReveal<HTMLElement>();
   const lit = hoveredSkill !== null && project.tech.includes(hoveredSkill);
   const dimmed = hoveredSkill !== null && !lit;
 
   return (
-    <article ref={ref} className={`project-card reveal ${lit ? 'lit' : ''} ${dimmed ? 'dimmed' : ''}`}>
+    <article ref={ref} className={`project-card ${revealCls} ${lit ? 'lit' : ''} ${dimmed ? 'dimmed' : ''}`}>
       <div className="project-head">
         <div>
           <h3 className="project-name">{project.name}</h3>
@@ -57,6 +58,7 @@ function ProjectCard({ project }: { project: Project }) {
       {project.link && (
         <a className="project-link" href={project.link} target="_blank" rel="noreferrer">
           {project.linkLabel ?? 'Visit'}
+          <Icon name="arrow" size={15} className="project-link-arrow" />
         </a>
       )}
     </article>
@@ -64,10 +66,10 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function Projects() {
-  const ref = useReveal();
+  const [ref, revealCls] = useReveal();
   return (
     <section id="projects" className="container">
-      <div ref={ref} className="reveal">
+      <div ref={ref} className={revealCls}>
         <p className="section-title">Projects</p>
         <h2 className="section-heading">Don&rsquo;t just read about them — play them.</h2>
         <p className="projects-hint">

@@ -1,11 +1,12 @@
 import { LINKS } from '../data';
 import { useReveal } from '../useReveal';
+import Icon from './Icon';
 
 export default function Footer() {
-  const ref = useReveal();
+  const [ref, revealCls] = useReveal();
   return (
     <footer className="footer-section container" id="contact">
-      <div ref={ref} className="footer-card reveal">
+      <div ref={ref} className={`footer-card ${revealCls}`}>
         <h2>Let&rsquo;s build something.</h2>
         <p>
           Whether it&rsquo;s an AI integration that needs to behave, a multiplayer lobby that
@@ -19,7 +20,7 @@ export default function Footer() {
       </div>
       <p className="footer-meta">
         © {new Date().getFullYear()} Christian Kamalu · React + Vite on Netlify ·
-        built with an AI pair <span className="die-glyph">🎲</span>
+        built with an AI pair <span className="die-glyph"><Icon name="dice" size={14} /></span>
       </p>
     </footer>
   );

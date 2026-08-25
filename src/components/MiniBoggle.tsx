@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Icon from './Icon';
 
 // A fixed board seeded with real findable words (adjacent incl. diagonals).
 const BOARD = [
@@ -91,7 +92,7 @@ export default function MiniBoggle() {
           <span className={`boggle-word ${claimable || flashOk ? 'ok' : ''}`}>{word || ' '}</span>
           {claimable && !flashOk && (
             <button className="mini-btn claim-btn" onClick={claim}>
-              ✓ Claim {word}
+              <Icon name="check" size={13} /> Claim {word}
             </button>
           )}
           {found.length > 0 ? (

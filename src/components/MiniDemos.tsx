@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Icon, { type IconName } from './Icon';
 
 /* ── BLE: a beacon chip advertising on a slow interval ── */
 export function BleDemo() {
@@ -27,12 +28,12 @@ export function BleDemo() {
 }
 
 /* ── NourishAI: agent output flavor — cycling meal cards ── */
-const MEALS: { emoji: string; name: string; line: string; tag: string }[] = [
-  { emoji: '🍣', name: 'Salmon poke bowl', line: '620 kcal · 42g protein · ready in 15m', tag: 'planner pick' },
-  { emoji: '🌯', name: 'Chipotle chicken wrap', line: '540 kcal · 38g protein · meal-prep friendly', tag: 'high protein' },
-  { emoji: '🍜', name: 'Miso ramen, extra egg', line: '680 kcal · 31g protein · comfort tier: high', tag: 'from photo log' },
-  { emoji: '🥗', name: 'Harvest grain salad', line: '480 kcal · 22g protein · pantry match 92%', tag: 'budget aware' },
-  { emoji: '🌮', name: 'Baja fish tacos ×3', line: '590 kcal · 35g protein · taco night unlocked', tag: 'planner pick' },
+const MEALS: { icon: IconName; name: string; line: string; tag: string }[] = [
+  { icon: 'poke', name: 'Salmon poke bowl', line: '620 kcal · 42g protein · ready in 15m', tag: 'planner pick' },
+  { icon: 'wrap', name: 'Chipotle chicken wrap', line: '540 kcal · 38g protein · meal-prep friendly', tag: 'high protein' },
+  { icon: 'ramen', name: 'Miso ramen, extra egg', line: '680 kcal · 31g protein · comfort tier: high', tag: 'from photo log' },
+  { icon: 'salad', name: 'Harvest grain salad', line: '480 kcal · 22g protein · pantry match 92%', tag: 'budget aware' },
+  { icon: 'taco', name: 'Baja fish tacos ×3', line: '590 kcal · 35g protein · taco night unlocked', tag: 'planner pick' },
 ];
 
 export function NourishDemo() {
@@ -46,7 +47,7 @@ export function NourishDemo() {
     <div className="demo-box">
       <div className="demo-label">What the planner serves</div>
       <div className="nourish-demo meal-fade" key={i}>
-        <div className="meal-emoji" aria-hidden="true">{meal.emoji}</div>
+        <div className="meal-icon" aria-hidden="true"><Icon name={meal.icon} size={34} /></div>
         <div className="meal-info">
           <div className="meal-name">{meal.name}</div>
           <div className="meal-line">{meal.line}</div>

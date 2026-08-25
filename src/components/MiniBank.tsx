@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Icon from './Icon';
 
 // Classic pip layouts on a 3x3 grid (indices 0-8, row-major).
 const PIPS: Record<number, number[]> = {
@@ -135,7 +136,7 @@ export default function MiniBank() {
       <span className={`bank-msg ${msg?.kind ?? ''}`}>{msg?.text ?? ' '}</span>
       <div className="bank-actions">
         <button className="mini-btn" onClick={roll} disabled={rolling}>
-          {rolling ? 'Rolling…' : 'Roll 🎲'}
+          {rolling ? 'Rolling…' : <>Roll <Icon name="dice" size={14} /></>}
         </button>
         <button className="mini-btn secondary" onClick={bank} disabled={rolling || pot === 0}>
           Bank it
