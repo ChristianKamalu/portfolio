@@ -26,13 +26,14 @@ function Die({ value, rolling, bust }: { value: number; rolling: boolean; bust: 
 /**
  * A pocket-sized turn of Bank with the real ruleset, grace window included:
  * the first 3 rolls can't bust and doubles count their face value; after
- * that, any 1 busts the pot and doubles multiply it. Bank to keep it.
+ * that, any 1 busts the pot and doubles multiply it. Bank to keep it — the
+ * grace window belongs to the round, so only a bust re-arms it.
  */
 export default function MiniBank() {
   const [dice, setDice] = useState<[number, number]>([3, 5]);
   const [pot, setPot] = useState(0);
   const [banked, setBanked] = useState(0);
-  const [rollNum, setRollNum] = useState(0); // rolls taken this turn
+  const [rollNum, setRollNum] = useState(0); // rolls taken this round — banking doesn't reset it
   const [rolling, setRolling] = useState(false);
   const [msg, setMsg] = useState<{ kind: 'bust' | 'doubles' | 'banked' | 'grace'; text: string } | null>(null);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -78,13 +79,22 @@ export default function MiniBank() {
         }
       } else if (a === 1 || b === 1) {
         setPot(0);
-        setRollNum(0);
-        setMsg({ kind: 'bust', text: 'BUST! The pot is gone.' });
+        setRollNum(0); // busting out ends the round — the next one starts in grace
+        setMsg({
+          kind: 'bust',
+          // Rolling on an empty pot (straight after banking) is a common line
+          // now, and "the pot is gone" would be a lie there.
+          text: pot > 0 ? 'BUST! The pot is gone.' : 'Rolled a 1 — new round, grace window back.',
+        });
         return;
       } else if (a === b) {
         const doubled = pot * 2;
         setPot(doubled);
-        setMsg({ kind: 'doubles', text: `DOUBLES! Pot ×2 → ${doubled}` });
+        setMsg({
+          kind: 'doubles',
+          // Same empty-pot case: ×2 of nothing is nothing, so don't cheer.
+          text: pot > 0 ? `DOUBLES! Pot ×2 → ${doubled}` : 'Doubles — but ×2 on an empty pot is still 0.',
+        });
       } else {
         setPot(pot + a + b);
       }
@@ -97,7 +107,9 @@ export default function MiniBank() {
     setBanked((s) => s + pot);
     setMsg({ kind: 'banked', text: `Banked ${pot}. Safe!` });
     setPot(0);
-    setRollNum(0);
+    // The grace window belongs to the round, not the pot — don't re-arm it
+    // here or three-roll-then-bank would be a risk-free scoring loop. Only a
+    // bust (which zeroes `rollNum` above) starts a fresh round.
   };
 
   return (
