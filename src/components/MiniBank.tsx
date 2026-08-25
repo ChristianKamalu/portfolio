@@ -13,6 +13,8 @@ const PIPS: Record<number, number[]> = {
 
 const GRACE_ROLLS = 3;
 
+// Pips carry no text, so the die stays out of the a11y tree entirely — the
+// single live region below speaks the faces (and everything else) in prose.
 function Die({ value, rolling, bust }: { value: number; rolling: boolean; bust: boolean }) {
   const on = PIPS[value] ?? [];
   return (
@@ -36,6 +38,7 @@ export default function MiniBank() {
   const [banked, setBanked] = useState(0);
   const [rollNum, setRollNum] = useState(0); // rolls taken this round — banking doesn't reset it
   const [rolling, setRolling] = useState(false);
+  const [rolled, setRolled] = useState(false); // dice start on a seeded face — don't call that a roll
   const [msg, setMsg] = useState<{ kind: 'bust' | 'doubles' | 'banked' | 'grace'; text: string } | null>(null);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const flickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -48,6 +51,7 @@ export default function MiniBank() {
 
   const isBust = !rolling && msg?.kind === 'bust';
   const inGrace = rollNum < GRACE_ROLLS;
+  const graceLeft = GRACE_ROLLS - rollNum;
 
   const roll = () => {
     if (rolling) return;
@@ -64,6 +68,7 @@ export default function MiniBank() {
       const b = 1 + Math.floor(Math.random() * 6);
       setDice([a, b]);
       setRolling(false);
+      setRolled(true);
       // `pot`/`rollNum` are from the render this roll started in — nothing
       // else can change them mid-roll (both buttons are disabled while rolling).
       if (rollNum < GRACE_ROLLS) {
@@ -115,25 +120,44 @@ export default function MiniBank() {
     // bust (which zeroes `rollNum` above) starts a fresh round.
   };
 
+  // Spoken twin of the scores column: same numbers, but as a sentence. The
+  // visible version leans on `·` and `×2`, which screen readers read out as
+  // "middle dot" and "multiplication sign" — or skip.
+  const spoken = rolling
+    ? 'Rolling…'
+    : `${rolled ? 'Rolled' : 'Dice show'} ${dice[0]} and ${dice[1]}. Pot ${pot}, banked ${banked}. ` +
+      (inGrace
+        ? `${graceLeft} safe ${graceLeft === 1 ? 'roll' : 'rolls'} left in the grace window.`
+        : 'Past the grace window: a 1 busts the pot, doubles multiply it.');
+
   return (
     <div className="demo-box bank-demo">
       <div className="demo-label">Playable — one turn of Bank</div>
       <div className="bank-table">
         <Die value={dice[0]} rolling={rolling} bust={isBust && dice[0] === 1} />
         <Die value={dice[1]} rolling={rolling} bust={isBust && dice[1] === 1} />
-        <div className="bank-scores">
+        {/* Hidden from the a11y tree because `spoken` already carries these
+            numbers into the live region — left visible it'd be read twice. */}
+        <div className="bank-scores" aria-hidden="true">
           <span className="bank-pot">Pot: {pot}</span>
           <span className="bank-banked">Banked: {banked}</span>
           <span className="bank-roll">
             {inGrace
-              ? `grace: ${GRACE_ROLLS - rollNum} safe ${GRACE_ROLLS - rollNum === 1 ? 'roll' : 'rolls'} left`
+              ? `grace: ${graceLeft} safe ${graceLeft === 1 ? 'roll' : 'rolls'} left`
               : '1s bust · doubles ×2'}
           </span>
         </div>
       </div>
-      {/* Own full-width row — inside the narrow scores column this wrapped on
-          phones and slid behind the buttons (fixed-height overflow). */}
-      <span className={`bank-msg ${msg?.kind ?? ''}`}>{msg?.text ?? ' '}</span>
+      {/* One polite region for the whole demo — dice, score and outcome land as
+          a single utterance. Three separate regions would talk over each other,
+          and `spoken` withholds the faces until `rolling` clears so the 90ms
+          flicker isn't narrated face by face.
+          The message keeps its own full-width row: inside the narrow scores
+          column it wrapped on phones and slid behind the buttons. */}
+      <div aria-live="polite" aria-atomic="true">
+        <span className="sr-only">{spoken}</span>
+        <span className={`bank-msg ${msg?.kind ?? ''}`}>{msg?.text ?? ' '}</span>
+      </div>
       <div className="bank-actions">
         <button className="mini-btn" onClick={roll} disabled={rolling}>
           {rolling ? 'Rolling…' : <>Roll <Icon name="dice" size={14} /></>}
