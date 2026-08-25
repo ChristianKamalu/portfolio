@@ -25,4 +25,7 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   never copy the raw PDF from the resume folder (it contains the phone
   number).
 - Netlify builds from master with `netlify.toml` (Node pinned there — the
-  site predates modern build images). The publish dir is `dist`.
+  site predates modern build images). The publish dir is `dist`. The catch-all
+  serves `index.html` with status **404**, not 200 — there's no client-side
+  router, so a 200 would turn every bad URL into a soft 404. If you ever add a
+  router, flip that status back to 200 in the same commit.
