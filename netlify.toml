@@ -1,0 +1,13 @@
+# Overrides the Netlify UI build settings left over from the old Gatsby site.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # The site predates modern build images; Vite 7 needs Node 20.19+.
+  NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
