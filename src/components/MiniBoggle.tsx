@@ -66,6 +66,14 @@ export default function MiniBoggle() {
 
   const picked = new Set(path.map(key));
 
+  // Spoken state for the one live region below. Letters go out space-separated
+  // so they're spelled rather than sounded out — a half-traced "SHI" read as a
+  // word is noise. With an empty path this doubles as the claim confirmation:
+  // claiming clears the path, so the found list is what gets announced.
+  const status = word
+    ? `${word.split('').join(' ')}${claimable ? ' — claimable, press Claim' : ''}`
+    : `No tiles selected.${found.length ? ` ${found.length} of ${WORDS.size} found: ${found.join(', ')}.` : ''}`;
+
   return (
     <div className="demo-box">
       <div className="demo-label">Playable — {WORDS.size} words hide in this board</div>
@@ -80,7 +88,10 @@ export default function MiniBoggle() {
                   key={key(p)}
                   className={`bog-tile ${inPath ? 'picked' : ''} ${inPath && flashOk ? 'flash-ok' : ''}`}
                   onClick={() => tap(p)}
-                  aria-label={`Tile ${letter}`}
+                  // Coordinates carry the adjacency rule to anyone who can't see
+                  // the grid; aria-pressed exposes the picked highlight.
+                  aria-label={`Tile ${letter}, row ${r + 1} column ${c + 1}`}
+                  aria-pressed={inPath}
                 >
                   {letter}
                 </button>
@@ -89,14 +100,21 @@ export default function MiniBoggle() {
           )}
         </div>
         <div className="boggle-side">
-          <span className={`boggle-word ${claimable || flashOk ? 'ok' : ''}`}>{word || ' '}</span>
+          {/* The traced word and the found list are both spoken by `status`,
+              so their visible twins stay out of the a11y tree. */}
+          <span className={`boggle-word ${claimable || flashOk ? 'ok' : ''}`} aria-hidden="true">
+            {word || ' '}
+          </span>
+          <span className="sr-only" aria-live="polite" aria-atomic="true">
+            {status}
+          </span>
           {claimable && !flashOk && (
             <button className="mini-btn claim-btn" onClick={claim}>
               <Icon name="check" size={13} /> Claim {word}
             </button>
           )}
           {found.length > 0 ? (
-            <span className="boggle-found">
+            <span className="boggle-found" aria-hidden="true">
               Found <b>{found.length}</b>: {found.join(', ')}
             </span>
           ) : (

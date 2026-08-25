@@ -66,6 +66,23 @@ button {
   border-radius: 4px;
 }
 
+/* Off-screen for eyes, present for screen readers — this is how the playable
+   demos narrate state that only exists as pixels (dice faces, traced tiles).
+   `display: none` / `visibility: hidden` would drop it from the a11y tree too,
+   and the old `clip: rect(...)` hack is deprecated; clip-path does the same job.
+   `white-space: nowrap` stops a long sentence from wrapping inside the 1px box
+   and dragging the layout around. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* Horizontal padding stays in longhand form on purpose: `.container` is a
    class and outranks the `section` type selector, so a `padding` shorthand
    here silently zeroed every section's vertical padding. */
@@ -445,7 +462,11 @@ section {
 .bank-scores { display: flex; flex-direction: column; gap: 2px; font-family: var(--font-display); }
 .bank-pot { font-size: 20px; font-weight: 700; color: var(--amber); }
 .bank-banked { font-size: 13px; color: var(--muted); }
-.bank-msg { font-size: 12.5px; font-weight: 700; min-height: 18px; line-height: 1.4; }
+/* `display: block` on purpose: the message now sits inside the live-region
+   wrapper instead of being a flex child of `.bank-demo`, and min-height is
+   ignored on an inline box — the empty row would collapse and bounce the
+   buttons up every time a message cleared. */
+.bank-msg { display: block; font-size: 12.5px; font-weight: 700; min-height: 18px; line-height: 1.4; }
 .bank-msg.bust { color: var(--red); }
 .bank-msg.doubles { color: var(--violet); }
 .bank-msg.banked { color: var(--green); }
