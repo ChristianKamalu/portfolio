@@ -35,9 +35,9 @@ export default function Hero() {
         <span className="ai">AI-first</span>
       </p>
       <p className="hero-line">
-        I build AI agents, real-time multiplayer games, and the systems around
-        them — then ship them. Most of the projects below are live.
-        Some of them you can play right on this page.
+        I build AI integrations, real-time multiplayer games, and the systems
+        around them — then ship them. The games below are live right now —
+        and playable right on this page.
       </p>
 
       <div className="hero-ctas">

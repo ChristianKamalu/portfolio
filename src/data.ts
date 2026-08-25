@@ -10,7 +10,7 @@ export const LINKS = {
 export const SUMMARY =
   'Full-stack engineer with 7+ years across React, TypeScript, and Node.js — and an AI-first workflow. ' +
   'I use LLMs daily to learn new domains fast and ship. Drawn to ambiguous, fast-moving problems, ' +
-  'deliberate about tradeoffs, and energized by building AI agents and the systems around them, ' +
+  'deliberate about tradeoffs, and energized by building AI integrations and the systems around them, ' +
   'from concept to live deployment.';
 
 export interface Project {
@@ -23,7 +23,7 @@ export interface Project {
   linkLabel?: string;
   status?: string;
   /** which mini-interaction the card renders */
-  demo?: 'bank' | 'boggle' | 'ble' | 'nourish' | 'wave';
+  demo?: 'bank' | 'boggle' | 'ble' | 'nourish';
 }
 
 export const PROJECTS: Project[] = [
@@ -32,12 +32,11 @@ export const PROJECTS: Project[] = [
     name: 'NourishAI',
     tagline: 'AI meal planning, end to end',
     description:
-      'Full-stack AI app: a React Native/TypeScript client and Node.js + PostgreSQL backend where ' +
-      'LLM agents generate meal plans through a provider-agnostic layer. Hybrid retrieval-and-ranking ' +
+      'Full-stack AI app: a React Native/TypeScript client and Node.js + PostgreSQL backend with ' +
+      'LLM-driven meal planning behind a provider-agnostic layer. Hybrid retrieval-and-ranking ' +
       'pipeline, evaluation and cost controls, photo → meal logging, and text → image meal previews.',
-    tech: ['React Native', 'TypeScript', 'Node.js', 'PostgreSQL', 'LLM Agents'],
-    link: 'https://nourishai.christiankamalu.com',
-    linkLabel: 'Open the app',
+    tech: ['React Native', 'TypeScript', 'Node.js', 'PostgreSQL', 'LLM Integrations'],
+    status: 'In progress',
     demo: 'nourish',
   },
   {
@@ -83,24 +82,11 @@ export const PROJECTS: Project[] = [
     name: 'TradeAngel & Litiscape',
     tagline: 'Two products, one small team, lead engineer',
     description:
-      'Led architecture and delivery across a two-product startup effort: integrated Thomson Reuters’ ' +
-      'CLEAR API to turn large external data flows into an analytical platform, and built a ' +
-      'client-facing marketplace from the ground up.',
+      'Led architecture and delivery across a two-product startup effort (2020–2022): integrated ' +
+      'Thomson Reuters’ CLEAR API to turn large external data flows into an analytical platform, and ' +
+      'built a client-facing marketplace from the ground up. Both products have since been retired.',
     tech: ['React', 'Node.js', 'Data Integration'],
-    link: 'https://thetradeangel.com',
-    linkLabel: 'Visit TradeAngel',
-  },
-  {
-    id: 'soundwave',
-    name: 'SoundWave',
-    tagline: 'Speaker rentals, minus the phone calls',
-    description:
-      'A clean rental site for a local speaker and audio-equipment business — browse the gear, ' +
-      'pick your dates, book it.',
-    tech: ['React'],
-    link: 'https://soundwaveaudio.netlify.app',
-    linkLabel: 'Browse the gear',
-    demo: 'wave',
+    status: 'Retired',
   },
 ];
 
@@ -115,16 +101,16 @@ export const EXPERIENCE: Job[] = [
   {
     company: 'Delinea',
     title: 'Software Engineer',
-    period: 'Jul 2022 — Present',
+    period: '2022 — 2026',
     bullets: [
-      'Build and maintain the company’s shared React component library — reusable UI shipped across its full suite of applications, partnering with product teams to standardize patterns.',
-      'Use AI tooling to ramp on unfamiliar areas of a large codebase quickly — a habit that’s central to how I deliver.',
+      'Built and maintained the company’s shared React component library — reusable UI shipped across its full suite of applications, partnering with product teams to standardize patterns.',
+      'Used AI tooling to ramp on unfamiliar areas of a large codebase quickly — a habit that’s central to how I deliver.',
     ],
   },
   {
     company: 'Litiscape & TradeAngel',
     title: 'Software Lead',
-    period: 'Mar 2020 — Jul 2022',
+    period: '2020 — 2022',
     bullets: [
       'Led a two-product engineering effort as technical lead, owning architecture and delivery in a fast-moving startup.',
       'Integrated Thomson Reuters’ CLEAR API to turn large external data flows into an analytical platform, and built a client-facing marketplace from the ground up.',
@@ -133,7 +119,7 @@ export const EXPERIENCE: Job[] = [
   {
     company: 'DentalQore',
     title: 'Associate Engineer & Technical Support',
-    period: 'Sep 2019 — Mar 2020',
+    period: '2019 — 2020',
     bullets: [
       'Rebuilt hundreds of client dental websites, adapting quickly across a high volume of varied requests.',
       'Worked directly with customers in 1-on-1 support, translating non-technical needs into shipped improvements.',
@@ -149,9 +135,9 @@ export interface SkillGroup {
 // Skill names that also appear in project `tech` arrays light those projects
 // up on hover — keep the spellings in sync.
 export const SKILLS: SkillGroup[] = [
-  { label: 'Frontend', skills: ['React', 'TypeScript', 'React Native', 'Expo'] },
+  { label: 'Frontend', skills: ['React', 'Angular', 'TypeScript', 'React Native', 'Expo'] },
   { label: 'Backend', skills: ['Node.js', 'PostgreSQL', 'Firebase'] },
-  { label: 'AI', skills: ['LLM Agents', 'Prompting & Evals', 'Claude', 'Gemini'] },
+  { label: 'AI', skills: ['LLM Integrations', 'Prompting & Evals', 'Claude', 'Gemini'] },
   { label: 'Systems & Mobile', skills: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin'] },
   { label: 'Ship it', skills: ['GitHub Actions', 'Netlify', 'Vite', 'Playwright'] },
 ];

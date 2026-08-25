@@ -18,5 +18,11 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   the NourishAI demo cycles content every 3.2s and once caused the whole row
   to jiggle (fixed with min-height + nowrap). Don't add idle animations that
   affect layout.
+- `public/Christian-Kamalu-Resume.pdf` is generated from
+  `C:\dev\resume\resume.html` with the phone number removed and
+  "AI agents" wording aligned to "AI integrations" (printed to PDF via
+  headless Chromium) — regenerate it the same way when the resume changes;
+  never copy the raw PDF from the resume folder (it contains the phone
+  number).
 - Netlify builds from master with `netlify.toml` (Node pinned there — the
   site predates modern build images). The publish dir is `dist`.
