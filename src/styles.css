@@ -293,7 +293,10 @@ section { padding: 88px 0; }
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  /* min() clamps the track floor to the container — a bare 320px minimum
+     stays 320px even when there's less room, and the page scrolls sideways
+     on 320-360px phones. */
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: 22px;
 }
 
@@ -438,14 +441,19 @@ section { padding: 88px 0; }
 
 /* ─────────────── mini boggle ─────────────── */
 .boggle-demo { display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+/* 44px tiles, but the four tracks share whatever the demo box actually has —
+   a hard repeat(4, 44px) is 194px and spilled out of the dashed frame below
+   ~322px viewport. max-width pins the normal size everywhere else. */
 .boggle-grid {
   display: grid;
-  grid-template-columns: repeat(4, 44px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
+  width: 100%;
+  max-width: 194px; /* 4 × 44px + 3 × 6px gap */
 }
 .bog-tile {
-  width: 44px;
-  height: 44px;
+  width: 100%;
+  aspect-ratio: 1;
   border-radius: 9px;
   background: linear-gradient(160deg, var(--bg-elevated), #141a27);
   border: 1px solid var(--border-bright);
