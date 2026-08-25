@@ -7,7 +7,21 @@
   # The site predates modern build images; Vite 7 needs Node 20.19+.
   NODE_VERSION = "22"
 
+# Unknown paths render the portfolio but keep an honest 404 status. There is no
+# client-side router — navigation is pure hash anchors, so nothing but "/" is a
+# real page, and a 200 here would make every typo and stale Gatsby-era link a
+# soft 404 for crawlers. Static files still win: Netlify matches them before
+# applying an unforced redirect, so the resume PDF, headshot, and favicon are
+# untouched. Switch back to 200 if a router is ever introduced.
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
+  status = 404
+
+# Cheap hardening for a static site with no cookies or auth.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
