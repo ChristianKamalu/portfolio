@@ -39,7 +39,10 @@ export default function App() {
           </div>
         </div>
       </nav>
-      <main>
+      {/* Same handler as the nav: the hero's "See the work" is an in-page
+          anchor too, and an anchor that jumps while the nav glides reads as a
+          bug rather than a choice. */}
+      <main onClick={smoothAnchor}>
         <Hero />
         <About />
         <Projects />

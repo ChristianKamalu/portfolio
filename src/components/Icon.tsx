@@ -18,6 +18,7 @@ export type IconName =
   | 'taco'
   | 'check'
   | 'caret'
+  | 'flip'
   | 'arrow';
 
 // Shared bowl, so the three bowl-based meals sit on exactly the same curve.
@@ -92,6 +93,15 @@ const GLYPHS: Record<IconName, ReactNode> = {
 
   // Faithful stand-in for the ▸ that used to bullet these lists.
   caret: <path d="M9.4 5.6L15.8 12L9.4 18.4Z" fill="currentColor" stroke="none" />,
+
+  // Three-quarter circle, open at the top, with the head on the opening —
+  // r=7 about (12,12), cubics at k = 0.5523r = 3.87 so the join stays round.
+  flip: (
+    <>
+      <path d="M19 12C19 15.87 15.87 19 12 19C8.13 19 5 15.87 5 12C5 8.13 8.13 5 12 5" />
+      <path d="M9.5 2.6L12.9 5.05L9.9 7.7" />
+    </>
+  ),
 
   arrow: (
     <>

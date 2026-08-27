@@ -1,0 +1,6 @@
+# Everything here is public. The Netlify catch-all answers unknown paths with
+# a real 404, so there are no soft-404 URLs worth hiding from crawlers.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.christiankamalu.com/sitemap.xml

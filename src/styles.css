@@ -16,7 +16,7 @@
   --red: #ef4d5f;
   --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
   --font-body: 'Inter', 'Segoe UI', sans-serif;
-  --section-y: 88px;
+  --section-y: 52px;
   --radius: 14px;
   --radius-sm: 8px;
   --shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
@@ -97,10 +97,9 @@ section {
   padding-bottom: var(--section-y);
 }
 
-/* 88px of air between sections eats most of a phone viewport — scale the
-   whole rhythm from one token rather than per-section overrides. */
+/* Scale the whole rhythm from one token rather than per-section overrides. */
 @media (max-width: 720px) {
-  :root { --section-y: 58px; }
+  :root { --section-y: 40px; }
   .container { padding-left: 18px; padding-right: 18px; }
 }
 
@@ -118,13 +117,31 @@ section {
   margin-bottom: 28px;
 }
 
-/* ───────────────────────── reveal-on-scroll ───────────────────────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+/* Visually hidden, still read by screen readers and still in the DOM text a
+   crawler indexes. Not `display: none` and not `visibility: hidden` — both of
+   those drop the text from the accessibility tree entirely. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
-.reveal.revealed { opacity: 1; transform: none; }
+
+/* ───────────────────────── reveal-on-scroll ───────────────────────── */
+/* Scoped to `.js`, which the inline script in index.html puts on <html>.
+   The page is prerendered, so with JS off the whole document is really there —
+   and a bare `.reveal { opacity: 0 }` would hand that reader a blank page full
+   of invisible text, since only useReveal's IntersectionObserver ever turns it
+   back on. Hiding only when the thing that can unhide it is running is the
+   version that cannot strand anyone. */
+.reveal { transition: opacity 0.6s ease, transform 0.6s ease; }
+.js .reveal { opacity: 0; transform: translateY(18px); }
+.js .reveal.revealed { opacity: 1; transform: none; }
 
 /* ───────────────────────── nav ───────────────────────── */
 .nav {
@@ -197,15 +214,27 @@ section {
   margin-bottom: 20px;
 }
 
-.tile-rows { display: block; margin: 0 0 26px; cursor: pointer; }
-.tile-rows-inner { display: flex; flex-direction: column; gap: 12px; }
-.tile-row { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Tight to the hint below it — the two read as one unit. */
+.tile-rows { display: block; margin: 0 0 12px; cursor: pointer; }
+.tile-rows-inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 1.1vw, 12px);
+  --tile-gap: clamp(4px, 0.85vw, 8px);
+  /* The board is a fixed 10-column grid — this must stay equal to COLS in
+     Hero.tsx — so size the tile from the space 10 tiles + 9 gaps actually
+     have. A flat clamp() floor let the rows wrap below ~430px, and the
+     phrases flip between different word lengths, so a board that reflows
+     mid-flip reads as a bug. 48px is the safe container padding (24px a
+     side; phones use 18px, so this under-shoots). */
+  --size: min(66px, calc((min(100vw, 1080px) - 48px - 9 * var(--tile-gap)) / 10));
+}
+.tile-row { display: flex; gap: var(--tile-gap); flex-wrap: wrap; }
 
 .tile {
-  --size: clamp(40px, 6.4vw, 66px);
   width: var(--size);
   height: var(--size);
-  border-radius: 12px;
+  border-radius: calc(var(--size) * 0.18);
   background: linear-gradient(160deg, var(--bg-elevated), #141a27);
   border: 1px solid var(--border-bright);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 6px 14px rgba(0, 0, 0, 0.35);
@@ -216,7 +245,12 @@ section {
   display: grid;
   place-items: center;
   user-select: none;
-  animation: tile-deal 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  /* `backwards`, not `both`: a finished animation with a forwards fill keeps
+     applying its last keyframe, and `transform: none` there outranks the
+     :hover rule below — which silently killed the tile hover lift. Backwards
+     still holds the `from` state through animation-delay, which is the only
+     part the staggered deal actually needs. */
+  animation: tile-deal 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) backwards;
   animation-delay: var(--delay);
   transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
@@ -229,6 +263,40 @@ section {
   from { opacity: 0; transform: translateY(26px) rotate(8deg) scale(0.7); }
   to { opacity: 1; transform: none; }
 }
+
+/* Split-flap. Duration matches TICK_MS in Hero.tsx so one glyph swap gets
+   exactly one flap; a dropping squash rather than a full collapse, which at
+   62ms strobes. Scrambling letters sit muted so the settled ones read amber
+   and the board visibly locks in left to right. */
+.tile.flipping {
+  color: var(--dim);
+  animation: tile-flap 62ms linear infinite;
+  animation-delay: 0s;
+}
+@keyframes tile-flap {
+  0% { transform: translateY(-16%) scaleY(0.7); }
+  62% { transform: none; }
+  100% { transform: none; }
+}
+/* The class stays on until the next flip, so this must not fill forwards
+   either — same reason as tile-deal above. */
+.tile.landed {
+  animation: tile-land 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2) backwards;
+  animation-delay: 0s;
+}
+@keyframes tile-land {
+  0% { transform: translateY(-8%) scaleY(1.16); }
+  55% { transform: scaleY(0.96); }
+  100% { transform: none; }
+}
+
+/* Padding flaps — a real board keeps its blanks rather than shrinking. */
+.tile.blank {
+  background: linear-gradient(160deg, #101520, #0c1017);
+  border-color: var(--border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+.tile.blank:hover { transform: none; border-color: var(--border); }
 .hero-sub {
   font-family: var(--font-display);
   font-size: clamp(17px, 2.4vw, 22px);
@@ -237,7 +305,7 @@ section {
   margin-bottom: 10px;
 }
 .hero-sub .divider { color: var(--dim); margin: 0 10px; }
-.hero-sub .ai { color: var(--violet); }
+.hero-sub .accent { color: var(--violet); }
 
 .hero-line { color: var(--muted); max-width: 560px; margin-bottom: 30px; font-size: 16.5px; }
 
@@ -260,11 +328,15 @@ section {
 .btn-ghost { border: 1px solid var(--border-bright); color: var(--text); }
 .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
 
+/* Sits directly under the board as its caption, not at the foot of the hero:
+   a control five elements away from what it controls doesn't read as a
+   control at all. `flex` (not inline-flex) so it takes its own line without
+   the CTA row pulling up beside it. */
 .shake-hint {
   color: var(--dim);
   font-size: 13px;
-  margin-top: 22px;
-  display: inline-flex;
+  margin: 0 0 26px;
+  display: flex;
   align-items: center;
   gap: 8px;
 }
@@ -328,6 +400,8 @@ section {
 
 /* ───────────────────────── projects ───────────────────────── */
 .projects-hint { color: var(--dim); font-size: 14px; margin: -16px 0 28px; }
+/* Second group inside the same section, so it needs its own air. */
+.project-group-break { margin-top: calc(var(--section-y) + 14px); }
 
 .project-grid {
   display: grid;
@@ -656,7 +730,6 @@ section {
 }
 
 /* ───────────────────────── skills ───────────────────────── */
-.skills-hint { color: var(--dim); font-size: 14px; margin: -16px 0 26px; }
 .skill-groups { display: flex; flex-direction: column; gap: 18px; }
 .skill-group { display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap; }
 .skill-group-label {
@@ -682,16 +755,71 @@ section {
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 6px 15px;
-  transition: color 0.15s, border-color 0.15s, transform 0.15s, background 0.15s;
-}
-.skill-chip:hover, .skill-chip.active {
-  color: var(--amber);
-  border-color: var(--amber);
-  background: var(--amber-soft);
-  transform: translateY(-2px);
 }
 
+/* ───────────────────────── contact form ───────────────────────── */
+.contact-form { margin: 26px auto 22px; max-width: 560px; text-align: left; }
+.field-row { display: flex; gap: 14px; }
+@media (max-width: 560px) { .field-row { flex-direction: column; } }
+.field { display: flex; flex-direction: column; gap: 6px; flex: 1; margin-bottom: 14px; }
+.field-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.field input, .field textarea {
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  width: 100%;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.field textarea { resize: vertical; min-height: 96px; }
+.field input::placeholder, .field textarea::placeholder { color: var(--dim); }
+.field input:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px var(--amber-soft);
+}
+.field input[aria-invalid='true'], .field textarea[aria-invalid='true'] { border-color: var(--red); }
+.field-error { font-size: 13px; color: var(--red); }
+
+/* Honeypot: off-screen rather than display:none, which some bots skip. */
+.hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+
+.form-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.btn[disabled] { opacity: 0.6; pointer-events: none; }
+.form-alt { color: var(--dim); font-size: 14px; }
+.form-error-note { color: var(--red); font-size: 14px; margin-top: 14px; }
+
+.form-sent { margin: 30px auto 24px; max-width: 460px; }
+.form-sent-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--green);
+  border: 1px solid rgba(47, 191, 113, 0.45);
+  background: rgba(47, 191, 113, 0.09);
+  margin-bottom: 14px;
+}
+.form-sent-title { font-family: var(--font-display); font-size: 21px; font-weight: 600; margin-bottom: 8px; }
+.form-sent-body { color: var(--muted); font-size: 15px; }
+
 /* ───────────────────────── footer ───────────────────────── */
+/* Only renders once SITE.serviceArea.city is filled in — see data.ts. */
+.footer-area {
+  color: var(--dim);
+  font-size: 14px;
+  margin-top: -6px;
+}
 .footer-section { padding-top: var(--section-y); padding-bottom: 40px; }
 .footer-card {
   background: linear-gradient(150deg, var(--bg-panel), #171326);
@@ -719,5 +847,6 @@ section {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  /* Must match the `.js .reveal` specificity above or it loses the cascade. */
+  .js .reveal { opacity: 1; transform: none; }
 }
