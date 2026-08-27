@@ -163,7 +163,10 @@ export default function Hero() {
             not an employment history — that link lives in the footer now, for
             the rarer visitor who came looking for it. */}
         <a className="btn btn-ghost" href="#projects">See the work</a>
-        <a className="btn btn-ghost" href={LINKS.github} target="_blank" rel="noreferrer">GitHub</a>
+        {/* GitHub is in the footer, not here. The public account is 61 repos
+            of 2019 bootcamp coursework with every real project private, so
+            from the hero it actively contradicts the "7+ years" in About.
+            Promote it back once the profile says what the site says. */}
         <a className="btn btn-ghost" href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
       </div>
     </header>
