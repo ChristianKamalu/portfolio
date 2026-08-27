@@ -158,7 +158,10 @@ export default function Hero() {
       </p>
 
       <div className="hero-ctas">
-        <a className="btn btn-primary" href={`mailto:${LINKS.email}`}>Start a project</a>
+        {/* Scrolls to the form rather than firing a mailto: — a mailto does
+            nothing at all, silently, for anyone without a desktop mail client,
+            which is a dead primary CTA on a lead-generating site. */}
+        <a className="btn btn-primary" href="#contact">Start a project</a>
         {/* The resume used to sit here. A prospective client wants the proof,
             not an employment history — that link lives in the footer now, for
             the rarer visitor who came looking for it. */}

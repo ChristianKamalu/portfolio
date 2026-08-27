@@ -1,6 +1,7 @@
 import { LINKS, SITE } from '../data';
 import { useReveal } from '../useReveal';
 import Icon from './Icon';
+import ContactForm from './ContactForm';
 
 export default function Footer() {
   const [ref, revealCls] = useReveal();
@@ -20,8 +21,8 @@ export default function Footer() {
             {' '}&mdash; working with clients anywhere.
           </p>
         )}
+        <ContactForm />
         <div className="footer-links">
-          <a className="btn btn-primary" href={`mailto:${LINKS.email}`}>{LINKS.email}</a>
           <a className="btn btn-ghost" href={LINKS.github} target="_blank" rel="noreferrer">GitHub</a>
           <a className="btn btn-ghost" href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
           <a className="btn btn-ghost" href={LINKS.resume} target="_blank" rel="noreferrer">Resume</a>

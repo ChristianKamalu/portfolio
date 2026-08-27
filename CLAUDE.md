@@ -81,6 +81,15 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
 - `public/og-image.png` is generated from `scripts/og-card.html` — open it in a
   headless browser at exactly 1200x630 and screenshot. Regenerate it the same
   way when the pitch changes; the card repeats the hero copy on purpose.
+- Contact is a **Netlify Form**, not a `mailto:`. A mailto does nothing at all
+  — no error, no tab, no feedback — for anyone without a desktop mail client,
+  which silently killed the primary CTA. Never make a mailto the only path to
+  reaching him; the address stays visible beside the form and in both failure
+  states so there is no dead end. Netlify detects the form from the deployed
+  HTML at build time, which works only because the page is prerendered, so the
+  hidden twin in index.html is the guard against a silent regression — keep
+  its field list identical to `ContactForm.tsx`, because Netlify only accepts
+  fields it saw at deploy time.
 - Icons are hand-rolled SVGs in `src/components/Icon.tsx` — one 24x24 grid,
   `currentColor` so they inherit surrounding CSS, cubics instead of arcs (sweep
   flags are unreadable later). No emoji in the UI: they render differently on

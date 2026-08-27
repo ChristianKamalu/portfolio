@@ -78,6 +78,20 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Hidden twin of the React contact form. Netlify detects forms from the
+         deployed HTML at build time; the real form is in there because the
+         page is prerendered, but if prerendering ever regresses, detection
+         would fail silently and submissions would 404 with nothing logged.
+         Keep this field list identical to ContactForm.tsx — Netlify only
+         accepts fields it saw at deploy time. -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input name="form-name" value="contact" />
+      <input name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

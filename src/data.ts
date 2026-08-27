@@ -119,8 +119,9 @@ export const CLIENT_SITES: Project[] = [
     name: 'Building Strong Women',
     tagline: 'Brand site & storefront',
     description:
-      'Marketing site and store for a women’s sport community, built out from the brand identity they ' +
-      'already had — palette, quote-card motif and pamphlet copy carried across intact. Newsletter, ' +
+      'Marketing site and store for a community empowering women and girls — in sport and in ' +
+      'life — built out from the brand identity they already had: ' +
+      'palette, quote-card motif and pamphlet copy carried across intact. Newsletter, ' +
       'product-interest and contact forms wired up, and products flip from “Notify me” to “Buy” with ' +
       'one flag when checkout goes live.',
     tech: ['React', 'TypeScript', 'Vite', 'Netlify'],
