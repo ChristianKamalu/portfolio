@@ -7,11 +7,79 @@ export const LINKS = {
   resume: '/Christian-Kamalu-Resume.pdf',
 };
 
+/**
+ * Everything the SEO layer needs, in one place. `vite.config.ts` reads this at
+ * build time and writes the JSON-LD into index.html, so the structured data
+ * ships as static markup instead of something only a JS-running crawler ever
+ * sees. Edit here, not in index.html.
+ *
+ * `serviceArea.city` is the one local-SEO lever on the whole site: fill it in
+ * and both the local `areaServed` entry and the "based in X" line switch on;
+ * leave it empty and the site stays purely national, which is the safe
+ * default. Never guess a city here — claiming the wrong location ranks worse
+ * than claiming none, because the signal contradicts every other one Google
+ * has (IP, links, reviews, the Business Profile).
+ */
+export const SITE = {
+  url: 'https://www.christiankamalu.com',
+  name: 'Christian Kamalu',
+  jobTitle: 'Full-stack engineer and freelance web designer',
+  /** Used verbatim as the meta description. Keep it under ~160 characters. */
+  description:
+    'I design and build websites for people and small businesses — personal sites, ' +
+    'small business sites, and rebuilds. Hand-written, fast, and yours to own outright.',
+  serviceArea: {
+    /** Where he actually is. This is the location claim — keep it true. */
+    city: 'Layton',
+    region: 'Utah',
+    country: 'United States',
+    /**
+     * Places genuinely served, which is not the same as a location claim.
+     * The schema type here is `Service`, not `LocalBusiness`, so naming these
+     * declares reach without asserting an address in any of them — Layton is
+     * a principal city of the Ogden–Clearfield metro, not Salt Lake City's,
+     * and claiming otherwise would put the page at odds with every other
+     * signal (Business Profile, citations, actual proximity).
+     */
+    alsoServes: [
+      { type: 'City', name: 'Salt Lake City' },
+      { type: 'City', name: 'Ogden' },
+      { type: 'City', name: 'Bountiful' },
+      { type: 'AdministrativeArea', name: 'Davis County' },
+    ],
+    /** How the region reads to a human. Used in the meta description; the
+     *  title stays tight with just city + state. */
+    label: 'Layton and the greater Salt Lake area',
+  },
+  /** Drives the JSON-LD offer catalog — the part that says "this is for hire". */
+  services: [
+    {
+      name: 'Personal website design and development',
+      description:
+        'A site with your name on it — portfolio, personal brand, booking or contact ' +
+        'form. Designed, built, and deployed to your own domain.',
+    },
+    {
+      name: 'Small business website design and development',
+      description:
+        'The site your business runs on — what you do, who you are, and how people ' +
+        'reach you, with enquiries landing straight in your inbox.',
+    },
+    {
+      name: 'Website redesign and rebuild',
+      description:
+        'A rebuild of a site that has aged out — faster, readable on a phone, and ' +
+        'editable without paying rent to a page builder.',
+    },
+  ],
+};
+
 export const SUMMARY =
-  'Full-stack engineer with 7+ years across React, TypeScript, and Node.js — and an AI-first workflow. ' +
-  'I use LLMs daily to learn new domains fast and ship. Drawn to ambiguous, fast-moving problems, ' +
-  'deliberate about tradeoffs, and energized by building AI integrations and the systems around them, ' +
-  'from concept to live deployment.';
+  'I build websites for people and small businesses — design through deploy, hand-written, ' +
+  'no page-builder bloat. Behind that: 7+ years as a full-stack engineer in React, TypeScript, ' +
+  'and Node.js, and an AI-first workflow that lets me learn a new business fast and ship fast ' +
+  'without cutting the corners that matter — speed, accessibility, and a site you can actually ' +
+  'keep updated.';
 
 export interface Project {
   id: string;
@@ -26,6 +94,45 @@ export interface Project {
   demo?: 'bank' | 'boggle' | 'ble' | 'nourish';
 }
 
+/**
+ * Client work — sites I was paid to build, for real people with real
+ * deadlines. These lead the Projects section on purpose: they are the proof
+ * behind the pitch in `SUMMARY`, so keep this array first and keep every
+ * `link` live. A dead link here is worse than no card at all.
+ */
+export const CLIENT_SITES: Project[] = [
+  {
+    id: 'toddharris',
+    name: 'Todd Harris',
+    tagline: 'Sports commentator — full rebuild',
+    description:
+      'Rebuilt an Emmy-winning Olympic commentator’s site from scratch on Astro: a reel player that ' +
+      'switches video host from one config line, a photo gallery he can refill himself, career credits ' +
+      'that read in fifteen seconds, and a booking form straight to his inbox. Sitemap, metadata and ' +
+      'IndexNow submission so the producers hiring him actually find it.',
+    tech: ['Astro', 'React', 'TypeScript', 'Tailwind', 'Netlify'],
+    link: 'https://www.thetoddharris.com',
+    linkLabel: 'Visit the site',
+  },
+  {
+    id: 'buildingstrongwomen',
+    name: 'Building Strong Women',
+    tagline: 'Brand site & storefront',
+    description:
+      'Marketing site and store for a women’s sport community, built out from the brand identity they ' +
+      'already had — palette, quote-card motif and pamphlet copy carried across intact. Newsletter, ' +
+      'product-interest and contact forms wired up, and products flip from “Notify me” to “Buy” with ' +
+      'one flag when checkout goes live.',
+    tech: ['React', 'TypeScript', 'Vite', 'Netlify'],
+    link: 'https://buildingstrongwomen.com',
+    linkLabel: 'Visit the site',
+  },
+];
+
+/**
+ * Everything else — built for myself, and the reason the client work goes
+ * fast. The playable cards live here.
+ */
 export const PROJECTS: Project[] = [
   {
     id: 'ble',
@@ -99,6 +206,15 @@ export interface Job {
 
 export const EXPERIENCE: Job[] = [
   {
+    company: 'Independent',
+    title: 'Freelance Web Designer & Developer',
+    period: '2026 — present',
+    bullets: [
+      'Design and build websites for people and small businesses end to end — first sketch, copy, build, domain, deploy, and a handoff that leaves the owner able to edit their own words.',
+      'Shipped thetoddharris.com, an Astro rebuild for an Emmy-winning Olympic commentator, and buildingstrongwomen.com, a brand site and storefront built out from an existing identity.',
+    ],
+  },
+  {
     company: 'Delinea',
     title: 'Software Engineer',
     period: '2022 — 2026',
@@ -132,12 +248,12 @@ export interface SkillGroup {
   skills: string[];
 }
 
-// Skill names that also appear in project `tech` arrays light those projects
-// up on hover — keep the spellings in sync.
+// Grouped for reading, not for behaviour — these chips are static labels
+// (see the Skills component). Order runs client-facing first.
 export const SKILLS: SkillGroup[] = [
-  { label: 'Frontend', skills: ['React', 'Angular', 'TypeScript', 'React Native', 'Expo'] },
+  { label: 'Sites', skills: ['React', 'Astro', 'TypeScript', 'Tailwind', 'Vite', 'Angular'] },
   { label: 'Backend', skills: ['Node.js', 'PostgreSQL', 'Firebase'] },
+  { label: 'Ship it', skills: ['Netlify', 'GitHub Actions', 'SEO & metadata', 'Playwright'] },
   { label: 'AI', skills: ['LLM Integrations', 'Prompting & Evals', 'Claude', 'Gemini'] },
-  { label: 'Systems & Mobile', skills: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin'] },
-  { label: 'Ship it', skills: ['GitHub Actions', 'Netlify', 'Vite', 'Playwright'] },
+  { label: 'Apps & Systems', skills: ['React Native', 'Expo', 'Embedded C', 'BLE', 'SwiftUI', 'Kotlin'] },
 ];

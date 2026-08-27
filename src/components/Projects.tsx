@@ -1,4 +1,4 @@
-import { PROJECTS, type Project } from '../data';
+import { CLIENT_SITES, PROJECTS, type Project } from '../data';
 import { useHighlight } from '../HighlightContext';
 import { useReveal } from '../useReveal';
 import Icon from './Icon';
@@ -67,13 +67,25 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function Projects() {
   const [ref, revealCls] = useReveal();
+  const [labRef, labRevealCls] = useReveal();
   return (
     <section id="projects" className="container">
       <div ref={ref} className={revealCls}>
-        <p className="section-title">Projects</p>
-        <h2 className="section-heading">Don&rsquo;t just read about them — play them.</h2>
+        <p className="section-title">Client work</p>
+        <h2 className="section-heading">Sites I&rsquo;ve built for other people.</h2>
         <p className="projects-hint">
-          The green dot means it&rsquo;s deployed and live right now. The dashed boxes are playable.
+          Both are live right now &mdash; the green dot means deployed. Yours could be next.
+        </p>
+      </div>
+      <div className="project-grid">
+        {CLIENT_SITES.map((p) => <ProjectCard key={p.id} project={p} />)}
+      </div>
+
+      <div ref={labRef} className={`${labRevealCls} project-group-break`}>
+        <p className="section-title">The workshop</p>
+        <h2 className="section-heading">And what I build when nobody&rsquo;s asking.</h2>
+        <p className="projects-hint">
+          Where the techniques come from. The dashed boxes are playable, right here on the page.
         </p>
       </div>
       <div className="project-grid">

@@ -4,18 +4,77 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Christian Kamalu — full-stack software engineer building AI integrations, real-time multiplayer games, and the systems around them. React, TypeScript, Node.js, embedded C." />
-    <meta property="og:title" content="Christian Kamalu — Full-Stack Software Engineer" />
-    <meta property="og:description" content="AI-first full-stack engineer. The games are live — play them." />
+    <meta name="theme-color" content="#0b0e14" />
+
+    <!-- Keyword-led rather than name-led: the domain is already an exact match
+         for anyone searching the name, so the title is spent on the terms
+         someone looking to hire actually types. -->
+    <title>Freelance Web Designer — Personal &amp; Small Business Websites · Christian Kamalu</title>
+    <meta
+      name="description"
+      content="I design and build websites for people and small businesses — personal sites, small business sites, and rebuilds. Hand-written, fast, and yours to own outright."
+    />
+    <link rel="canonical" href="https://www.christiankamalu.com/" />
+    <meta name="author" content="Christian Kamalu" />
+
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.christiankamalu.com" />
-    <title>Christian Kamalu — Full-Stack Software Engineer</title>
+    <meta property="og:site_name" content="Christian Kamalu" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://www.christiankamalu.com/" />
+    <meta property="og:title" content="Websites for people &amp; small businesses — Christian Kamalu" />
+    <meta
+      property="og:description"
+      content="I design, build, and ship websites — hand-written, quick to load, and yours to own outright."
+    />
+    <meta property="og:image" content="https://www.christiankamalu.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Christian Kamalu — websites for people and small businesses" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Websites for people &amp; small businesses — Christian Kamalu" />
+    <meta
+      name="twitter:description"
+      content="I design, build, and ship websites — hand-written, quick to load, and yours to own outright."
+    />
+    <meta name="twitter:image" content="https://www.christiankamalu.com/og-image.png" />
+
+    <!-- The JSON-LD graph is injected here at build time from SITE in
+         src/data.ts — see the structuredData plugin in vite.config.ts. -->
+
+    <!-- Marks that JS is running, before anything paints. The reveal-on-scroll
+         styles hang off `.js` so that a reader without JS gets the prerendered
+         page in full rather than a blank one — see .reveal in styles.css. A
+         <noscript> style block is the usual trick here and is not reliable:
+         whether its contents apply depends on the parser's scripting flag,
+         not on whether script actually ran. -->
+    <script>
+      document.documentElement.classList.add('js');
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Non-blocking: a third-party stylesheet in the critical path delays
+         first paint by a whole network round trip. `display=swap` already
+         means the fallback stack renders first, so this only moves the swap
+         earlier — it does not add a flash that wasn't there. -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

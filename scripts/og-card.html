@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        width: 1200px;
+        height: 630px;
+        background:
+          radial-gradient(1100px 620px at 78% 8%, rgba(139, 124, 248, 0.14), transparent 62%),
+          radial-gradient(900px 520px at 4% 96%, rgba(245, 165, 36, 0.11), transparent 60%),
+          #0b0e14;
+        color: #e8ecf4;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        padding: 74px 78px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 34px;
+        position: relative;
+        overflow: hidden;
+      }
+      /* Same dotted ground as the site. */
+      body::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+        background-size: 26px 26px;
+        opacity: 0.5;
+      }
+      .row { display: flex; gap: 11px; position: relative; }
+      .tile {
+        width: 96px;
+        height: 96px;
+        border-radius: 17px;
+        background: linear-gradient(160deg, #151a23, #141a27);
+        border: 1px solid #2a3242;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 8px 18px rgba(0, 0, 0, 0.4);
+        color: #f5a524;
+        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-weight: 700;
+        font-size: 50px;
+        display: grid;
+        place-items: center;
+      }
+      .sub {
+        position: relative;
+        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-weight: 600;
+        font-size: 43px;
+        letter-spacing: -0.4px;
+        line-height: 1.22;
+      }
+      .sub .accent { color: #8b7cf8; }
+      .meta {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #97a3b8;
+        font-size: 24px;
+      }
+      .chip {
+        border: 1px solid #f5a524;
+        color: #f5a524;
+        border-radius: 999px;
+        padding: 7px 20px;
+        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-weight: 600;
+        font-size: 21px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <span class="tile">W</span><span class="tile">E</span><span class="tile">B</span>
+      <span class="tile">S</span><span class="tile">I</span><span class="tile">T</span>
+      <span class="tile">E</span><span class="tile">S</span>
+    </div>
+    <div class="sub">
+      For people &amp; small businesses<br /><span class="accent">Design through deploy</span>
+    </div>
+    <div class="meta">
+      <span class="chip">Christian Kamalu</span>
+      <span>christiankamalu.com</span>
+    </div>
+  </body>
+</html>
