@@ -139,6 +139,12 @@ export default function Hero() {
           ))}
         </span>
       </h1>
+      <span className="shake-hint">
+        <button className="shake-btn" onClick={flip} aria-label="Flip the letter board">
+          <Icon name="flip" size={20} />
+        </button>
+        {hint}
+      </span>
 
       <p className="hero-sub">
         Websites for people &amp; small businesses
@@ -160,13 +166,6 @@ export default function Hero() {
         <a className="btn btn-ghost" href={LINKS.github} target="_blank" rel="noreferrer">GitHub</a>
         <a className="btn btn-ghost" href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
       </div>
-
-      <span className="shake-hint">
-        <button className="shake-btn" onClick={flip} aria-label="Flip the letter board">
-          <Icon name="flip" size={20} />
-        </button>
-        {hint}
-      </span>
     </header>
   );
 }

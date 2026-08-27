@@ -197,7 +197,8 @@ section {
   margin-bottom: 20px;
 }
 
-.tile-rows { display: block; margin: 0 0 26px; cursor: pointer; }
+/* Tight to the hint below it — the two read as one unit. */
+.tile-rows { display: block; margin: 0 0 12px; cursor: pointer; }
 .tile-rows-inner {
   display: flex;
   flex-direction: column;
@@ -310,11 +311,15 @@ section {
 .btn-ghost { border: 1px solid var(--border-bright); color: var(--text); }
 .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
 
+/* Sits directly under the board as its caption, not at the foot of the hero:
+   a control five elements away from what it controls doesn't read as a
+   control at all. `flex` (not inline-flex) so it takes its own line without
+   the CTA row pulling up beside it. */
 .shake-hint {
   color: var(--dim);
   font-size: 13px;
-  margin-top: 22px;
-  display: inline-flex;
+  margin: 0 0 26px;
+  display: flex;
   align-items: center;
   gap: 8px;
 }
