@@ -467,9 +467,14 @@ section {
 }
 
 .tech-row { display: flex; flex-wrap: wrap; gap: 7px; }
+/* A real <button>, so the cross-highlight is reachable by keyboard and by
+   finger. That means undoing the button reset above — hence the explicit
+   line-height, which a button would otherwise take from the UA (~1.2) instead
+   of the body's 1.6 and render five pixels shorter than the span it replaced. */
 .tech-chip {
   font-size: 12px;
   font-weight: 600;
+  line-height: 1.6;
   color: var(--muted);
   background: var(--bg-elevated);
   border: 1px solid var(--border);
@@ -478,6 +483,15 @@ section {
   transition: color 0.2s, border-color 0.2s;
 }
 .tech-chip.hot { color: var(--amber); border-color: var(--amber); }
+
+/* Twelve-point text with three pixels of padding is a 27px target; a finger
+   needs more than that, and this is the only control on the card that is not
+   the card itself. Padding rather than a negative-inset pseudo-element: the
+   chips sit 7px apart, so an expanded hit box would overlap its neighbours and
+   light up the wrong tech. */
+@media (pointer: coarse) {
+  .tech-chip { padding: 7px 11px; }
+}
 
 .project-link {
   font-weight: 600;
