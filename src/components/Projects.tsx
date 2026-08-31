@@ -16,10 +16,10 @@ function Demo({ kind }: { kind: NonNullable<Project['demo']> }) {
 }
 
 function ProjectCard({ project }: { project: Project }) {
-  const { hoveredSkill, setHoveredSkill } = useHighlight();
+  const { highlightedSkill, pinnedSkill, hoverSkill, togglePin, clearPin } = useHighlight();
   const [ref, revealCls] = useReveal<HTMLElement>();
-  const lit = hoveredSkill !== null && project.tech.includes(hoveredSkill);
-  const dimmed = hoveredSkill !== null && !lit;
+  const lit = highlightedSkill !== null && project.tech.includes(highlightedSkill);
+  const dimmed = highlightedSkill !== null && !lit;
 
   return (
     <article ref={ref} className={`project-card ${revealCls} ${lit ? 'lit' : ''} ${dimmed ? 'dimmed' : ''}`}>
@@ -44,14 +44,28 @@ function ProjectCard({ project }: { project: Project }) {
 
       <div className="tech-row">
         {project.tech.map((t) => (
-          <span
+          <button
+            type="button"
             key={t}
-            className={`tech-chip ${hoveredSkill === t ? 'hot' : ''}`}
-            onMouseEnter={() => setHoveredSkill(t)}
-            onMouseLeave={() => setHoveredSkill(null)}
+            className={`tech-chip ${highlightedSkill === t ? 'hot' : ''}`}
+            aria-pressed={pinnedSkill === t}
+            aria-label={`${t} — highlight the projects that use it`}
+            // Pointer events, not mouse events: a tap reports `touch` here, so a
+            // finger never sets the hover state that iOS would then refuse to
+            // clear. Click alone drives touch, and it toggles, so a second tap
+            // always releases it.
+            onPointerEnter={(e) => { if (e.pointerType === 'mouse') hoverSkill(t); }}
+            onPointerLeave={(e) => { if (e.pointerType === 'mouse') hoverSkill(null); }}
+            // Only a *keyboard* focus previews. Safari doesn't focus a button on
+            // tap, but a browser that did would otherwise re-open the same hole
+            // the pointer-type check just closed.
+            onFocus={(e) => { if (e.currentTarget.matches(':focus-visible')) hoverSkill(t); }}
+            onBlur={() => hoverSkill(null)}
+            onClick={() => togglePin(t)}
+            onKeyDown={(e) => { if (e.key === 'Escape') clearPin(); }}
           >
             {t}
-          </span>
+          </button>
         ))}
       </div>
 
