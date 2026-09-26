@@ -28,11 +28,6 @@ interface Fields {
 
 const EMPTY: Fields = { name: '', email: '', message: '' };
 
-const encode = (data: Record<string, string>) =>
-  Object.entries(data)
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-    .join('&');
-
 export default function ContactForm() {
   const [fields, setFields] = useState<Fields>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
@@ -54,15 +49,21 @@ export default function ContactForm() {
     return Object.keys(next).length === 0;
   };
 
-  const submit = async (e: FormEvent) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
+    // Serialise the form itself, not `fields`: state never holds `bot-field`,
+    // and a honeypot Netlify never receives is a trap that never springs.
+    // This sends exactly what a native POST would.
+    const body = new URLSearchParams(
+      new FormData(e.currentTarget) as unknown as Record<string, string>,
+    ).toString();
     setStatus('sending');
     try {
       const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ 'form-name': FORM_NAME, ...fields }),
+        body,
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus('sent');
@@ -87,7 +88,8 @@ export default function ContactForm() {
 
   return (
     <form className="contact-form" name={FORM_NAME} method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={submit} noValidate>
-      {/* Netlify needs both of these in the submitted body, not just the markup. */}
+      {/* Netlify needs both of these in the submitted body, not just the markup —
+          which is why `submit` serialises the form rather than `fields`. */}
       <input type="hidden" name="form-name" value={FORM_NAME} />
       <p className="hp-field">
         <label>Leave this empty if you&rsquo;re human: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label>
