@@ -11,11 +11,15 @@ import Icon from './Icon';
  * dead conversion path on a lead-generating site is the worst possible bug:
  * the visitor concludes the site is broken and leaves, and nothing is logged.
  *
- * Netlify detects the form from the deployed HTML at build time, which works
- * here only because the page is prerendered. The hidden static twin in
- * index.html is the belt to that braces: if prerendering ever regresses, form
- * detection would otherwise fail silently. Keep the two field lists in sync —
- * Netlify only accepts fields it saw at deploy time.
+ * Netlify registers the form from the hidden static twin in index.html, not
+ * from this one. That is deliberate: when Netlify detects a form in deployed
+ * HTML it rewrites it — strips `data-netlify`/`netlify-honeypot` and injects
+ * its own hidden `form-name` input — and doing that to the prerendered markup
+ * inside #root would leave React hydrating a form with an extra child, which
+ * throws away the whole prerendered page. So this form carries no Netlify
+ * attributes, and submissions are matched by the `form-name` field in the
+ * POST body. Keep the two field lists in sync — Netlify only accepts fields
+ * it saw at deploy time.
  */
 
 const FORM_NAME = 'contact';
@@ -86,7 +90,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form className="contact-form" name={FORM_NAME} method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={submit} noValidate>
+    <form className="contact-form" name={FORM_NAME} method="POST" onSubmit={submit} noValidate>
       {/* Netlify needs both of these in the submitted body, not just the markup. */}
       <input type="hidden" name="form-name" value={FORM_NAME} />
       <p className="hp-field">
