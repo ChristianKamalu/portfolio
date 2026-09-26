@@ -48,6 +48,9 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   touch the DOM during render (browser APIs belong in `useEffect` or event
   handlers), and every `useState` initial value must be a constant — a
   `Math.random()` or `Date.now()` initialiser is a hydration mismatch. The
+  same goes for reading the clock directly in render: the footer's copyright
+  year starts from `__BUILD_YEAR__` (a `define` in vite.config.ts, typed in
+  `src/globals.d.ts`) and switches to the visitor's year in an effect. The
   `<link rel="preload" as="image">` that appears at the top of `#root` is
   React 19 hoisting the headshot preload; it belongs there, and moving it to
   `<head>` would break hydration.

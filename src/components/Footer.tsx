@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { LINKS, SITE } from '../data';
 import { useReveal } from '../useReveal';
 import Icon from './Icon';
@@ -5,6 +6,10 @@ import ContactForm from './ContactForm';
 
 export default function Footer() {
   const [ref, revealCls] = useReveal();
+  // Build year first, so the client's first render matches the prerendered
+  // HTML; the visitor's clock only takes over after hydration.
+  const [year, setYear] = useState(__BUILD_YEAR__);
+  useEffect(() => setYear(new Date().getFullYear()), []);
   return (
     <footer className="footer-section container" id="contact">
       <div ref={ref} className={`footer-card ${revealCls}`}>
@@ -29,7 +34,7 @@ export default function Footer() {
         </div>
       </div>
       <p className="footer-meta">
-        © {new Date().getFullYear()} Christian Kamalu · React + Vite on Netlify ·
+        © {year} Christian Kamalu · React + Vite on Netlify ·
         built with an AI pair <span className="die-glyph"><Icon name="dice" size={14} /></span>
       </p>
     </footer>
