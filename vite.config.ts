@@ -164,4 +164,8 @@ function structuredData(): Plugin {
 
 export default defineConfig({
   plugins: [react(), structuredData()],
+  // The copyright year, frozen at build time so the prerendered footer and the
+  // hydrating client render the same text. Reading the clock in render would
+  // make every load after New Year a hydration mismatch until the next deploy.
+  define: { __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()) },
 });
