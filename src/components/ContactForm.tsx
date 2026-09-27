@@ -11,11 +11,15 @@ import Icon from './Icon';
  * dead conversion path on a lead-generating site is the worst possible bug:
  * the visitor concludes the site is broken and leaves, and nothing is logged.
  *
- * Netlify detects the form from the deployed HTML at build time, which works
- * here only because the page is prerendered. The hidden static twin in
- * index.html is the belt to that braces: if prerendering ever regresses, form
- * detection would otherwise fail silently. Keep the two field lists in sync —
- * Netlify only accepts fields it saw at deploy time.
+ * Netlify registers the form from the hidden static twin in index.html, not
+ * from this one. That is deliberate: when Netlify detects a form in deployed
+ * HTML it rewrites it — strips `data-netlify`/`netlify-honeypot` and injects
+ * its own hidden `form-name` input — and doing that to the prerendered markup
+ * inside #root would leave React hydrating a form with an extra child, which
+ * throws away the whole prerendered page. So this form carries no Netlify
+ * attributes, and submissions are matched by the `form-name` field in the
+ * POST body. Keep the two field lists in sync — Netlify only accepts fields
+ * it saw at deploy time.
  */
 
 const FORM_NAME = 'contact';
@@ -27,11 +31,6 @@ interface Fields {
 }
 
 const EMPTY: Fields = { name: '', email: '', message: '' };
-
-const encode = (data: Record<string, string>) =>
-  Object.entries(data)
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-    .join('&');
 
 export default function ContactForm() {
   const [fields, setFields] = useState<Fields>(EMPTY);
@@ -54,15 +53,21 @@ export default function ContactForm() {
     return Object.keys(next).length === 0;
   };
 
-  const submit = async (e: FormEvent) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
+    // Serialise the form itself, not `fields`: state never holds `bot-field`,
+    // and a honeypot Netlify never receives is a trap that never springs.
+    // This sends exactly what a native POST would.
+    const body = new URLSearchParams(
+      new FormData(e.currentTarget) as unknown as Record<string, string>,
+    ).toString();
     setStatus('sending');
     try {
       const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ 'form-name': FORM_NAME, ...fields }),
+        body,
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus('sent');
@@ -86,8 +91,9 @@ export default function ContactForm() {
   }
 
   return (
-    <form className="contact-form" name={FORM_NAME} method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={submit} noValidate>
-      {/* Netlify needs both of these in the submitted body, not just the markup. */}
+    <form className="contact-form" name={FORM_NAME} method="POST" onSubmit={submit} noValidate>
+      {/* Netlify needs both of these in the submitted body, not just the markup —
+          which is why `submit` serialises the form rather than `fields`. */}
       <input type="hidden" name="form-name" value={FORM_NAME} />
       <p className="hp-field">
         <label>Leave this empty if you&rsquo;re human: <input name="bot-field" tabIndex={-1} autoComplete="off" /></label>

@@ -48,6 +48,9 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   touch the DOM during render (browser APIs belong in `useEffect` or event
   handlers), and every `useState` initial value must be a constant — a
   `Math.random()` or `Date.now()` initialiser is a hydration mismatch. The
+  same goes for reading the clock directly in render: the footer's copyright
+  year starts from `__BUILD_YEAR__` (a `define` in vite.config.ts, typed in
+  `src/globals.d.ts`) and switches to the visitor's year in an effect. The
   `<link rel="preload" as="image">` that appears at the top of `#root` is
   React 19 hoisting the headshot preload; it belongs there, and moving it to
   `<head>` would break hydration.
@@ -85,11 +88,16 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   — no error, no tab, no feedback — for anyone without a desktop mail client,
   which silently killed the primary CTA. Never make a mailto the only path to
   reaching him; the address stays visible beside the form and in both failure
-  states so there is no dead end. Netlify detects the form from the deployed
-  HTML at build time, which works only because the page is prerendered, so the
-  hidden twin in index.html is the guard against a silent regression — keep
-  its field list identical to `ContactForm.tsx`, because Netlify only accepts
-  fields it saw at deploy time.
+  states so there is no dead end. Netlify registers the form from the hidden
+  twin in index.html (outside `#root`), which is the **only** form carrying
+  `data-netlify`. Never add Netlify attributes to the React `<form>`: Netlify
+  rewrites every form it detects in deployed HTML (strips the attributes,
+  injects a hidden `form-name` input), and doing that inside `#root` hands
+  React a form with an extra child, which throws away the whole prerendered
+  page on hydration. Submissions are matched by the `form-name` field in the
+  POST body, so the React form keeps its own. Keep the twin's field list
+  identical to `ContactForm.tsx`, because Netlify only accepts fields it saw
+  at deploy time.
 - Icons are hand-rolled SVGs in `src/components/Icon.tsx` — one 24x24 grid,
   `currentColor` so they inherit surrounding CSS, cubics instead of arcs (sweep
   flags are unreadable later). No emoji in the UI: they render differently on
