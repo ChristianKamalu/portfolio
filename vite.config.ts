@@ -55,13 +55,15 @@ function structuredData(): Plugin {
         email: `mailto:${LINKS.email}`,
         image: `${url}/headshot.jpg`,
         sameAs: [LINKS.github, LINKS.linkedin],
-        // Websites are the lead offer, but the entity is a full-stack
-        // engineer — leaving the back end out here would understate what the
-        // person actually is. Not visible copy, so naming the full range
-        // costs nothing in focus.
+        // Websites and web apps are the offer, and the entity is a
+        // full-stack engineer — leaving the back end out here would
+        // understate what the person actually is. Not visible copy, so
+        // naming the full range costs nothing in focus.
         knowsAbout: [
           'Web design',
           'Web development',
+          'Web application development',
+          'Progressive web apps',
           'Full-stack development',
           'Small business websites',
           'Personal websites',
@@ -80,14 +82,14 @@ function structuredData(): Plugin {
       {
         '@type': 'Service',
         '@id': id('service'),
-        name: 'Website design and development',
+        name: 'Website and web app design and development',
         serviceType: 'Web design and development',
         description,
         provider: { '@id': id('person') },
         areaServed,
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
-          name: 'Website design and development',
+          name: 'Website and web app design and development',
           itemListElement: services.map((s) => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', name: s.name, description: s.description },
@@ -118,8 +120,8 @@ function structuredData(): Plugin {
   // than string-patched so the length is checkable, and hard-failed rather
   // than warned so a long `label` can't quietly truncate in the SERP.
   const localDescription =
-    `Websites for people and small businesses in ${descPlace}. Personal sites, ` +
-    'small business sites, and rebuilds — hand-written and fast.';
+    `Websites and web apps for people and small businesses in ${descPlace}. ` +
+    'Sites, rebuilds, and custom apps — hand-written and fast.';
 
   if (serviceArea.city && localDescription.length > 160) {
     throw new Error(
@@ -135,7 +137,7 @@ function structuredData(): Plugin {
         ? html
             .replace(
               /<title>[^<]*<\/title>/,
-              `<title>Freelance Web Designer in ${esc(titlePlace)} — Personal &amp; Small Business Websites</title>`,
+              `<title>Freelance Web Designer &amp; Developer in ${esc(titlePlace)} — Websites &amp; Web Apps</title>`,
             )
             .replace(
               // `\s*` spans the newline and indentation between the meta's
