@@ -13,10 +13,10 @@ export default function Footer() {
   return (
     <footer className="footer-section container" id="contact">
       <div ref={ref} className={`footer-card ${revealCls}`}>
-        <h2>Let&rsquo;s build your site.</h2>
+        <h2>Let&rsquo;s build your site &mdash; or your app.</h2>
         <p>
           A personal site, something for your business, a rebuild of the one that has
-          quietly aged out &mdash; or something with a good deal more behind it. Tell me
+          quietly aged out &mdash; or an app with a good deal more behind it. Tell me
           what it needs to do and who it needs to reach, and I&rsquo;ll tell you what it
           takes. No pitch deck required.
         </p>

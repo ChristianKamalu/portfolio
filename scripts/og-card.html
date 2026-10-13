@@ -23,7 +23,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 34px;
+        gap: 30px;
         position: relative;
         overflow: hidden;
       }
@@ -36,18 +36,19 @@
         background-size: 26px 26px;
         opacity: 0.5;
       }
-      .row { display: flex; gap: 11px; position: relative; }
+      .rows { display: flex; flex-direction: column; gap: 11px; position: relative; }
+      .row { display: flex; gap: 11px; }
       .tile {
-        width: 96px;
-        height: 96px;
-        border-radius: 17px;
+        width: 84px;
+        height: 84px;
+        border-radius: 15px;
         background: linear-gradient(160deg, #151a23, #141a27);
         border: 1px solid #2a3242;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 8px 18px rgba(0, 0, 0, 0.4);
         color: #f5a524;
         font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
         font-weight: 700;
-        font-size: 50px;
+        font-size: 44px;
         display: grid;
         place-items: center;
       }
@@ -55,10 +56,11 @@
         position: relative;
         font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
         font-weight: 600;
-        font-size: 43px;
+        font-size: 40px;
         letter-spacing: -0.4px;
         line-height: 1.22;
       }
+      .tile.blank { opacity: 0.28; }
       .sub .accent { color: #8b7cf8; }
       .meta {
         position: relative;
@@ -80,10 +82,18 @@
     </style>
   </head>
   <body>
-    <div class="row">
-      <span class="tile">W</span><span class="tile">E</span><span class="tile">B</span>
-      <span class="tile">S</span><span class="tile">I</span><span class="tile">T</span>
-      <span class="tile">E</span><span class="tile">S</span>
+    <div class="rows">
+      <div class="row">
+        <span class="tile">W</span><span class="tile">E</span><span class="tile">B</span>
+        <span class="tile">S</span><span class="tile">I</span><span class="tile">T</span>
+        <span class="tile">E</span><span class="tile">S</span>
+      </div>
+      <div class="row">
+        <span class="tile">A</span><span class="tile">N</span><span class="tile">D</span>
+        <span class="tile blank"></span>
+        <span class="tile">A</span><span class="tile">P</span><span class="tile">P</span>
+        <span class="tile">S</span>
+      </div>
     </div>
     <div class="sub">
       For people &amp; small businesses<br /><span class="accent">Design through deploy</span>

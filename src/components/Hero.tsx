@@ -16,7 +16,7 @@ import Icon from './Icon';
  */
 const PHRASES = [
   { lead: 'Hi, I’m', lines: ['CHRISTIAN', 'KAMALU'] },
-  { lead: 'What I do —', lines: ['I BUILD', 'WEBSITES'] },
+  { lead: 'What I build —', lines: ['WEBSITES', 'AND APPS'] },
   { lead: 'Who I do it for —', lines: ['PEOPLE AND', 'BUSINESSES'] },
   { lead: 'And how far I take it —', lines: ['DESIGN TO', 'DEPLOY'] },
 ];
@@ -127,7 +127,7 @@ export default function Hero() {
             readers and for crawlers; it says what the hero says out loud, so
             it is an accessible name, not cloaked keywords. */}
         <span className="sr-only">
-          Christian Kamalu &mdash; websites for people and small businesses
+          Christian Kamalu &mdash; websites and web apps for people and small businesses
         </span>
         <span aria-hidden="true" className="tile-rows-inner">
           {Array.from({ length: ROWS }, (_, row) => (
@@ -147,14 +147,15 @@ export default function Hero() {
       </span>
 
       <p className="hero-sub">
-        Websites for people &amp; small businesses
+        Websites &amp; web apps for people &amp; small businesses
         <span className="divider">·</span>
         <span className="accent">Design through deploy</span>
       </p>
       <p className="hero-line">
-        I design, build, and ship websites — hand-written, quick to load, and yours
-        to own outright. Two client sites are live below, and the games further
-        down are playable right on this page.
+        I design, build, and ship websites — and the apps behind them when a site
+        isn&rsquo;t enough. Hand-written, quick to load, and yours to own outright.
+        Two client sites are live below, and the games further down are playable
+        right on this page.
       </p>
 
       <div className="hero-ctas">

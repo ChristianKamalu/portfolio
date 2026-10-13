@@ -8,7 +8,7 @@ export default function About() {
     <section id="about" className="container">
       <div ref={ref} className={revealCls}>
         <p className="section-title">About</p>
-        <h2 className="section-heading">I build websites.</h2>
+        <h2 className="section-heading">I build websites and apps.</h2>
         <div className="about-grid">
           <div className="headshot-frame">
             <img src="/headshot.jpg" alt="Christian Kamalu" width={720} height={900} />
@@ -23,13 +23,13 @@ export default function About() {
               your own website.
             </p>
             <p>
-              And if it turns out you need more than a site &mdash; accounts, a database,
-              a booking flow, an integration with something you already run &mdash;
-              that&rsquo;s the same job at a different size. Say so early and I&rsquo;ll
-              scope it.
+              And when you need more than a site &mdash; accounts, a database, a booking
+              flow, an admin screen, an integration with something you already run
+              &mdash; I build that too. Same person, same hand-written approach, a
+              different size of job. Say so early and I&rsquo;ll scope it.
             </p>
             <ul className="now-list">
-              <li><span className="spark"><Icon name="caret" size={11} /></span> Taking on website work — personal sites, small business, and rebuilds of sites that have aged out</li>
+              <li><span className="spark"><Icon name="caret" size={11} /></span> Taking on website and web app work — personal sites, small business, rebuilds of sites that have aged out, and the custom app when a site isn&rsquo;t enough</li>
               <li><span className="spark"><Icon name="caret" size={11} /></span> Recently shipped: thetoddharris.com and buildingstrongwomen.com</li>
               <li><span className="spark"><Icon name="caret" size={11} /></span> Always: an LLM in the loop — it&rsquo;s how this site got built, too</li>
             </ul>

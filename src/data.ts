@@ -23,11 +23,11 @@ export const LINKS = {
 export const SITE = {
   url: 'https://www.christiankamalu.com',
   name: 'Christian Kamalu',
-  jobTitle: 'Full-stack engineer and freelance web designer',
+  jobTitle: 'Freelance web designer and full-stack developer',
   /** Used verbatim as the meta description. Keep it under ~160 characters. */
   description:
-    'I design and build websites for people and small businesses — personal sites, ' +
-    'small business sites, and rebuilds. Hand-written, fast, and yours to own outright.',
+    'I design and build websites and web apps for people and small businesses — ' +
+    'sites, rebuilds, and the app behind the site. Hand-written, fast, yours to own.',
   serviceArea: {
     /** Where he actually is. This is the location claim — keep it true. */
     city: 'Layton',
@@ -71,15 +71,22 @@ export const SITE = {
         'A rebuild of a site that has aged out — faster, readable on a phone, and ' +
         'editable without paying rent to a page builder.',
     },
+    {
+      name: 'Custom web application development',
+      description:
+        'When a site is not enough — accounts, a database, a booking flow, an admin ' +
+        'screen, an integration with something you already run. A small app built to ' +
+        'fit the business, on your own domain, installable on a phone.',
+    },
   ],
 };
 
 export const SUMMARY =
-  'I build websites for people and small businesses — design through deploy, hand-written, ' +
-  'no page-builder bloat. Behind that: 7+ years as a full-stack engineer in React, TypeScript, ' +
-  'and Node.js, and an AI-first workflow that lets me learn a new business fast and ship fast ' +
-  'without cutting the corners that matter — speed, accessibility, and a site you can actually ' +
-  'keep updated.';
+  'I build websites and web apps for people and small businesses — design through deploy, ' +
+  'hand-written, no page-builder bloat. Behind that: 7+ years as a full-stack engineer in React, ' +
+  'TypeScript, and Node.js, and an AI-first workflow that lets me learn a new business fast and ' +
+  'ship fast without cutting the corners that matter — speed, accessibility, and something you ' +
+  'can actually keep updated.';
 
 export interface Project {
   id: string;
@@ -136,15 +143,33 @@ export const CLIENT_SITES: Project[] = [
  */
 export const PROJECTS: Project[] = [
   {
-    id: 'ble',
-    name: 'BLE Beacon Device',
-    tagline: 'From bare metal to the App Store',
+    id: 'pigeon',
+    name: 'Pigeon',
+    tagline: 'A carrier pigeon for files — it only flies home',
     description:
-      'Self-taught embedded C to build a Bluetooth Low Energy device end to end: firmware on a ' +
-      'TI CC2340R5 MCU with a deep-sleep power model targeting 5+ year battery life, a SwiftUI iOS ' +
-      'companion shipping to TestFlight via GitHub Actions, and a Kotlin Android client in progress.',
-    tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'GitHub Actions'],
-    status: 'In progress',
+      'Self-hosted file and photo app, built because sftpgo was the wrong tool: one Docker ' +
+      'container on a home server, reached over Tailscale, installable on a phone. Devices pair ' +
+      'with a short code and are held to one folder. Chunked, resumable uploads that keep a ' +
+      'photo’s capture date; a gallery by day; on-box face grouping that never uploads anything; ' +
+      'duplicate finding; video remuxed by ffmpeg as it streams. Nothing is ever deleted — only trashed.',
+    tech: ['React', 'TypeScript', 'Node.js', 'Docker', 'PWA'],
+    status: 'In daily use',
+  },
+  {
+    id: 'foilet',
+    name: 'Foilet',
+    tagline: 'A phone blocker — from bare metal to the app stores',
+    description:
+      'Opt-in self-restriction for adults: a small BLE device locks your most distracting apps ' +
+      'while the toilet lid is up; a Bed Foilet is next on the same protocol. Built end to end — ' +
+      'embedded C firmware on a TI CC2340R5 with a 5+ year battery budget, custom PCB and enclosure, ' +
+      'over-the-air updates, a SwiftUI iOS app on the Screen Time API and its Kotlin Android twin — ' +
+      'plus a screen-time layer (pause before opening, daily limits, schedules, leaderboards) that ' +
+      'needs no device at all.',
+    tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'Supabase', 'GitHub Actions'],
+    link: 'https://foilet.com',
+    linkLabel: 'Visit foilet.com',
+    status: 'In beta',
     demo: 'ble',
   },
   {
@@ -211,7 +236,7 @@ export const EXPERIENCE: Job[] = [
     title: 'Freelance Web Designer & Developer',
     period: '2026 — present',
     bullets: [
-      'Design and build websites for people and small businesses end to end — first sketch, copy, build, domain, deploy, and a handoff that leaves the owner able to edit their own words.',
+      'Design and build websites and web apps for people and small businesses end to end — first sketch, copy, build, domain, deploy, and a handoff that leaves the owner able to edit their own words.',
       'Shipped thetoddharris.com, an Astro rebuild for an Emmy-winning Olympic commentator, and buildingstrongwomen.com, a brand site and storefront built out from an existing identity.',
     ],
   },
@@ -253,8 +278,8 @@ export interface SkillGroup {
 // (see the Skills component). Order runs client-facing first.
 export const SKILLS: SkillGroup[] = [
   { label: 'Sites', skills: ['React', 'Astro', 'TypeScript', 'Tailwind', 'Vite', 'Angular'] },
-  { label: 'Backend', skills: ['Node.js', 'PostgreSQL', 'Firebase'] },
-  { label: 'Ship it', skills: ['Netlify', 'GitHub Actions', 'SEO & metadata', 'Playwright'] },
+  { label: 'Backend', skills: ['Node.js', 'PostgreSQL', 'Supabase', 'Firebase'] },
+  { label: 'Ship it', skills: ['Netlify', 'Docker', 'GitHub Actions', 'SEO & metadata', 'Playwright'] },
   { label: 'AI', skills: ['LLM Integrations', 'Prompting & Evals', 'Claude', 'Gemini'] },
-  { label: 'Apps & Systems', skills: ['React Native', 'Expo', 'Embedded C', 'BLE', 'SwiftUI', 'Kotlin'] },
+  { label: 'Apps & Systems', skills: ['PWA', 'React Native', 'Expo', 'Embedded C', 'BLE', 'SwiftUI', 'Kotlin'] },
 ];

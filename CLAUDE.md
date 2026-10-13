@@ -3,20 +3,23 @@
 Vite + React 19 + TypeScript single-page portfolio. Zero runtime deps beyond
 react/react-dom — keep it that way; animations are hand-rolled CSS.
 
-- The site sells one thing: **websites for people and small businesses, on
-  contract**. Hero, About, the Contact footer, and the `index.html` meta tags
-  all carry that message — change one and change the rest, or the page starts
-  hedging. It is deliberately not a job-hunt page any more; there is no "open
-  to my next role" line to restore.
+- The site sells one thing: **websites and web apps for people and small
+  businesses, on contract**. Hero, About, the Contact footer, the OG card, and
+  the `index.html` meta tags all carry that message — change one and change
+  the rest, or the page starts hedging. It is deliberately not a job-hunt page
+  any more; there is no "open to my next role" line to restore.
 - That focus is layered, and the layers are not the same. The **headline layer**
   — `<title>`, the h1's `.sr-only` text, the hero, the Google Business Profile
-  category — stays narrow, because a small business owner searching for a
-  website reads breadth as "too big for my job" and leaves. The **depth layer**
-  — About's closing paragraph, the Contact copy, Skills, the Workshop cards,
-  and `knowsAbout` in the JSON-LD — carries the full full-stack range, so a
-  client who needs a back end behind the site doesn't filter themselves out.
-  Widening the headline to match the depth is the tempting edit and the wrong
-  one; it was considered and declined.
+  category — says "websites and web apps" and no more, in the client's words:
+  a small business owner searching for a website reads "software engineering"
+  or "full-stack" as "too big for my job" and leaves. "Apps" was added to the
+  headline in October 2026 on the owner's call, because the Workshop proves
+  the claim and leaving it out was understating the offer; keep it phrased as
+  the app *behind the site*, not as a separate enterprise service. The
+  **depth layer** — About's closing paragraph, the Contact copy, Skills, the
+  Workshop cards, and `knowsAbout` in the JSON-LD — carries the full
+  full-stack range, so a client who needs a back end doesn't filter
+  themselves out. Don't widen the headline any further than that.
 - `CLIENT_SITES` (paid work, leads the Projects section) and `PROJECTS`
   (personal builds) are separate arrays of the same `Project` type. Client
   cards are the proof behind the pitch, so every `link` there must stay live —
