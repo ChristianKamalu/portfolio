@@ -156,6 +156,20 @@ export const PROJECTS: Project[] = [
     status: 'In daily use',
   },
   {
+    id: 'conductor',
+    name: 'Conductor',
+    tagline: 'Claude Code across every project — inbox to merged PR',
+    description:
+      'Desktop app that runs Claude Code over every project in a folder, on a schedule or on ' +
+      'demand. Code review, bug hunts, audits and tasks you write in plain language file their ' +
+      'findings into a triage inbox; approve one and it is built in an isolated worktree, pushed, ' +
+      'judged by a second agent against the item, and merged from the app. Embedded terminals that ' +
+      'survive restarts, a browser the sessions can drive, live previews, on-device dictation, and ' +
+      'the whole thing from a phone over Tailscale. This site is maintained through it.',
+    tech: ['Electron', 'React', 'Node.js', 'Claude', 'LLM Integrations'],
+    status: 'In daily use',
+  },
+  {
     id: 'foilet',
     name: 'Foilet',
     tagline: 'A phone blocker — from bare metal to the app stores',
@@ -281,5 +295,5 @@ export const SKILLS: SkillGroup[] = [
   { label: 'Backend', skills: ['Node.js', 'PostgreSQL', 'Supabase', 'Firebase'] },
   { label: 'Ship it', skills: ['Netlify', 'Docker', 'GitHub Actions', 'SEO & metadata', 'Playwright'] },
   { label: 'AI', skills: ['LLM Integrations', 'Prompting & Evals', 'Claude', 'Gemini'] },
-  { label: 'Apps & Systems', skills: ['PWA', 'React Native', 'Expo', 'Embedded C', 'BLE', 'SwiftUI', 'Kotlin'] },
+  { label: 'Apps & Systems', skills: ['Electron', 'PWA', 'React Native', 'Expo', 'Embedded C', 'BLE', 'SwiftUI', 'Kotlin'] },
 ];
