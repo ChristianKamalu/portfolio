@@ -42,7 +42,11 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   gone: no sensing method or component, no chip or part names, no pairing
   gesture, no named OS framework behind the blocking, no enclosure
   construction or materials. Battery life, "patent pending", the store
-  testing status and the engineering stack are fine to say.
+  testing status and the engineering stack are fine to say. Its demo box
+  is the app's own "Listening radius" page redrawn (a toilet, a disk on the
+  floor, Tighter / Standard / Wider) — the owner chose that over a beacon
+  readout; the metres come from the app's illustrative curve, not a
+  measurement, and it shows no signal numbers.
 - All copy/content lives in `src/data.ts` (projects, experience, skills,
   links). Edit content there, not in components. The hover cross-highlight
   (`HighlightContext`) runs on project `tech` strings alone — hovering a chip

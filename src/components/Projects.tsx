@@ -4,13 +4,13 @@ import { useReveal } from '../useReveal';
 import Icon from './Icon';
 import MiniBank from './MiniBank';
 import MiniBoggle from './MiniBoggle';
-import { BleDemo, NourishDemo } from './MiniDemos';
+import { NourishDemo, RadiusDemo } from './MiniDemos';
 
 function Demo({ kind }: { kind: NonNullable<Project['demo']> }) {
   switch (kind) {
     case 'bank': return <MiniBank />;
     case 'boggle': return <MiniBoggle />;
-    case 'ble': return <BleDemo />;
+    case 'radius': return <RadiusDemo />;
     case 'nourish': return <NourishDemo />;
   }
 }

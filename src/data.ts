@@ -98,7 +98,7 @@ export interface Project {
   linkLabel?: string;
   status?: string;
   /** which mini-interaction the card renders */
-  demo?: 'bank' | 'boggle' | 'ble' | 'nourish';
+  demo?: 'bank' | 'boggle' | 'radius' | 'nourish';
   /** Only the featured card renders these — one row per layer of the build. */
   highlights?: { label: string; text: string }[];
 }
@@ -221,7 +221,7 @@ export const FEATURED: Project = {
   link: 'https://foilet.com',
   linkLabel: 'Visit foilet.com',
   status: 'In beta',
-  demo: 'ble',
+  demo: 'radius',
 };
 
 /**
