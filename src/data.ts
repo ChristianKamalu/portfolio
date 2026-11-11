@@ -142,8 +142,9 @@ export const CLIENT_SITES: Project[] = [
 /**
  * The one build promoted above the Workshop grid, full width, with a row per
  * layer. It is the deepest proof of the "and apps" half of the pitch: a
- * product line with its own hardware, firmware, two phone apps, a backend
- * and a site, and it is live. Keep this to a single project — two featured
+ * product with its own hardware, firmware, two phone apps, a backend and a
+ * site, and it is live. It is ONE device with modes (observation zones) —
+ * toilet and bed first, more on the way — not a family of devices. Keep this to a single project — two featured
  * cards is just another grid.
  *
  * Disclosure: foilet.com describes outcomes, never mechanisms (its
@@ -156,11 +157,12 @@ export const CLIENT_SITES: Project[] = [
 export const FEATURED: Project = {
   id: 'foilet',
   name: 'Foilet',
-  tagline: 'One app and a family of small devices for the places your phone has no business being',
+  tagline: 'One small device, one app, for the places your phone has no business being',
   description:
     'Foilet blocks the apps you pick in the places you pick ahead of time, and gives them back ' +
-    'the moment you leave. Toilet Foilet sticks to the lid and runs for years on a coin cell; ' +
-    'Bed Foilet sits on the nightstand and can tell the bed from the bedroom. Your phone decides ' +
+    'the moment you leave. One device, with a mode for each place: on the toilet lid it knows ' +
+    'when the lid is up; on the nightstand it can tell the bed from the bedroom. Those two ship ' +
+    'first, with more zones on the way. Your phone decides ' +
     'how hard it pushes — block on arrival, after a few minutes of grace, or never, with a quiet ' +
     'note of how long you have been in there — and the same app runs screen-time limits, weekly ' +
     'contests with friends and a visit log without any device at all. A joint project I ' +
@@ -175,12 +177,12 @@ export const FEATURED: Project = {
         'know what they are like.',
     },
     {
-      label: 'The devices',
+      label: 'The device',
       text:
         'Custom hardware, firmware and enclosure, designed in-house and now on production ' +
-        'plates. A device talks only to the phones paired with it, from a few feet away, and ' +
-        'updates itself over the air from the app. Years on one coin cell; the bed version runs ' +
-        'on USB-C.',
+        'plates. It talks only to the phones paired with it, from a few feet away, updates ' +
+        'itself over the air from the app, and runs for years on one coin cell. New zones ' +
+        'arrive as modes, not as new hardware.',
     },
     {
       label: 'Households',

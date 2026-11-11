@@ -161,7 +161,7 @@ export default function Projects() {
         <p className="section-title">Featured build</p>
         <h2 className="section-heading">A product, not a demo.</h2>
         <p className="projects-hint">
-          A product line with its own hardware, two phone apps, a backend and a site &mdash; what &ldquo;and apps&rdquo; looks like at full depth.
+          A product with its own hardware, two phone apps, a backend and a site &mdash; what &ldquo;and apps&rdquo; looks like at full depth.
         </p>
       </div>
       <FeaturedCard project={FEATURED} />
