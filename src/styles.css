@@ -696,7 +696,8 @@ section {
   width: 100%;
   height: auto;
   cursor: grab;
-  touch-action: none;
+  /* Vertical pans stay with the page; a tap still places the phone. */
+  touch-action: pan-y;
   border-radius: var(--radius-sm);
 }
 .radius-map.dragging { cursor: grabbing; }

@@ -115,8 +115,14 @@ export function RadiusDemo() {
           className={`radius-map ${dragging ? 'dragging' : ''}`}
           viewBox={`0 0 ${MAP_W} ${MAP_H}`}
           role="img"
-          aria-label="A map from above: the Foilet in the middle, this phone moving around it, and the listening radius as a circle. Drag to move the phone."
-          onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); setDragging(true); place(e); }}
+          aria-label="A map from above: the Foilet in the middle, this phone moving around it, and the listening radius as a circle. Click or tap to move the phone."
+          // A mouse drags; a finger taps to place. Dragging on touch would
+          // need touch-action: none, which swallows the page scroll for any
+          // finger that lands on the map — a dead strip on a phone.
+          onPointerDown={(e) => {
+            place(e);
+            if (e.pointerType === 'mouse') { e.currentTarget.setPointerCapture(e.pointerId); setDragging(true); }
+          }}
           onPointerMove={(e) => { if (dragging) place(e); }}
           onPointerUp={() => setDragging(false)}
           onPointerCancel={() => setDragging(false)}
@@ -165,7 +171,7 @@ export function RadiusDemo() {
           </div>
         </div>
         <p className="radius-note">
-          The phone is you. Inside the boundary it&rsquo;s blocked. Drag it around, and widen
+          The phone is you. Inside the boundary it&rsquo;s blocked. Move it around, and widen
           or tighten the boundary until it&rsquo;s where you want it. Everyone who uses the
           device sets their own.
         </p>
