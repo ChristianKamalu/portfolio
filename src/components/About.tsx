@@ -30,7 +30,7 @@ export default function About() {
             </p>
             <ul className="now-list">
               <li><span className="spark"><Icon name="caret" size={11} /></span> Taking on website and web app work — personal sites, small business, rebuilds of sites that have aged out, and the custom app when a site isn&rsquo;t enough</li>
-              <li><span className="spark"><Icon name="caret" size={11} /></span> Recently shipped: thetoddharris.com and buildingstrongwomen.com</li>
+              <li><span className="spark"><Icon name="caret" size={11} /></span> Recently shipped: thetoddharris.com, buildingstrongwomen.com, and Foilet &mdash; a device and apps that break the scrolling habit</li>
               <li><span className="spark"><Icon name="caret" size={11} /></span> Always: an LLM in the loop — it&rsquo;s how this site got built, too</li>
             </ul>
           </div>

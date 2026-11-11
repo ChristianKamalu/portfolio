@@ -430,6 +430,53 @@ section {
 .project-card.lit { border-color: var(--amber); box-shadow: 0 0 0 1px var(--amber), var(--shadow); }
 .project-card.dimmed { opacity: 0.35; }
 
+/* The featured build: one card, full width, two columns — the story, demo,
+   chips and link on the left, a row per layer down the right. It is still a
+   .project-card so the cross-highlight, hover lift and reveal all apply. */
+.project-card--featured {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 28px 40px;
+  padding: 30px;
+  border-color: rgba(139, 124, 248, 0.45);
+  background:
+    radial-gradient(640px 320px at 100% 0%, rgba(139, 124, 248, 0.1), transparent 70%),
+    var(--bg-panel);
+}
+.project-card--featured:hover { border-color: var(--violet); }
+.featured-main { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.project-card--featured .project-name { font-size: 28px; }
+.project-card--featured .project-tagline { font-size: 15px; }
+.project-card--featured .project-desc { flex-grow: 0; font-size: 15.5px; }
+
+.highlights {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px 22px;
+  min-width: 0;
+}
+.highlights div { min-width: 0; }
+.highlights dt {
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 3px;
+}
+.highlights dd { color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+
+@media (max-width: 860px) {
+  .project-card--featured { grid-template-columns: 1fr; padding: 24px; }
+  /* Stacked, the layers have the full width — two across until a phone. */
+  .highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .highlights { grid-template-columns: 1fr; }
+}
+
 .project-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .project-name { font-size: 21px; font-weight: 700; }
 .project-tagline { color: var(--violet); font-size: 14px; font-weight: 500; margin-top: 2px; }
@@ -627,41 +674,76 @@ section {
 .boggle-clear:hover { color: var(--text); }
 .claim-btn { align-self: flex-start; padding: 6px 12px; font-size: 12.5px; background: var(--green); color: #06120b; }
 
-/* ─────────────── ble pulse ─────────────── */
-.ble-demo { display: flex; align-items: center; gap: 18px; }
-.ble-stage { position: relative; width: 92px; height: 92px; flex-shrink: 0; }
-.ble-chip {
-  position: absolute;
-  inset: 26px;
-  border-radius: 10px;
-  background: linear-gradient(150deg, #1d2534, #10151f);
-  border: 1px solid var(--border-bright);
-  display: grid;
-  place-items: center;
-  color: var(--violet);
+/* ─────────────── listening radius (Foilet) ─────────────── */
+.radius-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.radius-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 92px;
+  justify-content: flex-end;
+  letter-spacing: 0.6px;
+  color: var(--dim);
+  transition: color 0.2s ease;
+}
+.radius-state-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dim); transition: background 0.2s ease; }
+.radius-state.blocked { color: var(--violet); }
+.radius-state.blocked .radius-state-dot { background: var(--violet); box-shadow: 0 0 0 3px var(--violet-soft); }
+
+.radius-demo { display: flex; flex-direction: column; gap: 10px; }
+.radius-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: grab;
+  /* Vertical pans stay with the page; a tap still places the phone. */
+  touch-action: pan-y;
+  border-radius: var(--radius-sm);
+}
+.radius-map.dragging { cursor: grabbing; }
+.radius-range { fill: none; stroke: var(--border); stroke-width: 1; stroke-dasharray: 3 5; }
+/* The boundary is drawn at its widest and scaled down from the puck, so one
+   transition moves fill and stroke together; the stroke keeps its width. */
+.radius-ring {
+  transform: scale(var(--ring, 1));
+  transform-origin: 180px 125px;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.3, 1.1);
+}
+.radius-fill { fill: rgba(139, 124, 248, 0.14); }
+.radius-stroke { fill: none; stroke: var(--violet); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.radius-shadow { fill: rgba(0, 0, 0, 0.5); }
+.radius-puck-name {
+  fill: #3b86f7;
   font-family: var(--font-display);
-  font-size: 9.5px;
   font-weight: 700;
-  z-index: 2;
+  font-size: 9px;
+  letter-spacing: 0.8px;
 }
-.ble-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid var(--violet);
-  opacity: 0;
-  animation: ble-ping var(--ble-period, 2.4s) ease-out infinite;
-  animation-delay: var(--ring-delay);
+.radius-phone-halo { fill: var(--violet); opacity: 0; transition: opacity 0.2s ease; }
+.radius-phone.blocked .radius-phone-halo { opacity: 0.22; }
+.radius-phone-body { fill: var(--text); transition: fill 0.2s ease; }
+.radius-phone-screen { fill: var(--bg); }
+.radius-phone.blocked .radius-phone-body { fill: var(--violet); }
+
+.radius-slider { padding: 0 6px; }
+.radius-slider input[type='range'] {
+  display: block;
+  width: 100%;
+  margin: 0;
+  accent-color: var(--violet);
+  cursor: pointer;
 }
-@keyframes ble-ping {
-  0% { transform: scale(0.35); opacity: 0; }
-  10% { opacity: 0.85; }
-  55% { transform: scale(1.05); opacity: 0; }
-  100% { transform: scale(1.05); opacity: 0; }
+.radius-stops {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--dim);
 }
-.ble-readout { font-size: 12.5px; color: var(--muted); font-family: var(--font-display); }
-.ble-readout .val { color: var(--text); font-weight: 600; }
-.ble-readout .sleep { color: var(--dim); }
+.radius-stops span:nth-child(2) { position: absolute; left: 50%; transform: translateX(-50%); }
+.radius-stops .on { color: var(--text); font-weight: 600; }
+.radius-note { font-size: 12.5px; color: var(--muted); margin: 0; }
 
 /* ─────────────── nourish demo ─────────────── */
 .nourish-demo { display: flex; align-items: center; gap: 14px; min-height: 66px; }

@@ -23,7 +23,37 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
 - `CLIENT_SITES` (paid work, leads the Projects section) and `PROJECTS`
   (personal builds) are separate arrays of the same `Project` type. Client
   cards are the proof behind the pitch, so every `link` there must stay live —
-  a dead link is worse than no card.
+  a dead link is worse than no card. `FEATURED` is one more `Project`, shown
+  full width between the two with a row per layer (`highlights`): it is
+  Foilet, because a product with its own hardware, firmware, two phone apps
+  and a backend is the deepest proof of the "and apps" half of the pitch.
+  Keep it to one — two featured cards is just another grid — and keep it out
+  of `PROJECTS` so it isn't rendered twice. Foilet is **one device with
+  modes** (observation zones — toilet and bed first, more coming), not a
+  family of devices; don't write "devices" plural. The point is **breaking
+  the scrolling habit, not banning the phone** from a place: the phone is
+  welcome, only the picked apps go quiet, and the user sets how hard it
+  pushes — lead with that, not with "no phones here". It is a **joint
+  project**
+  (co-founded; Foilet LLC): the copy never says one person built it — the
+  one-person line belongs to the website work in About, not here. Foilet's
+  own site describes **outcomes, never mechanisms** (`web/README.md` in the
+  Foilet repo), and this card keeps to that even though the patent reason is
+  gone: no sensing method or component, no chip or part names, no pairing
+  gesture, no named OS framework behind the blocking, no enclosure
+  construction or materials. Battery life, "patent pending", the store
+  testing status and the engineering stack are fine to say. Its demo box
+  is the listening radius, live: the puck in the middle, this phone
+  wandering around it (draggable), and a Tighter / Standard / Wider
+  boundary that decides whether the phone reads as blocked. The owner
+  asked for exactly that, with the real puck rather than a toilet or a bed
+  — don't put furniture back in. The puck is drawn **face on**, straight
+  from above: a white disc with one soft rolled edge (a radial gradient,
+  not stepped rings — the apps' angled device drawing was tried and the
+  owner disliked its halo lines), the brand mark from the Foilet repo's
+  `brand/foilet-mark.svg` and "Foilet" upright on its roof. It shows no
+  signal numbers; the wander is decoration and stops under
+  prefers-reduced-motion, the drag does not.
 - All copy/content lives in `src/data.ts` (projects, experience, skills,
   links). Edit content there, not in components. The hover cross-highlight
   (`HighlightContext`) runs on project `tech` strings alone — hovering a chip

@@ -98,7 +98,9 @@ export interface Project {
   linkLabel?: string;
   status?: string;
   /** which mini-interaction the card renders */
-  demo?: 'bank' | 'boggle' | 'ble' | 'nourish';
+  demo?: 'bank' | 'boggle' | 'radius' | 'nourish';
+  /** Only the featured card renders these — one row per layer of the build. */
+  highlights?: { label: string; text: string }[];
 }
 
 /**
@@ -138,6 +140,91 @@ export const CLIENT_SITES: Project[] = [
 ];
 
 /**
+ * The one build promoted above the Workshop grid, full width, with a row per
+ * layer. It is the deepest proof of the "and apps" half of the pitch: a
+ * product with its own hardware, firmware, two phone apps, a backend and a
+ * site, and it is live. It is ONE device with modes (observation zones) —
+ * toilet and bed first, more on the way — not a family of devices. Keep this to a single project — two featured
+ * cards is just another grid.
+ *
+ * Disclosure: foilet.com describes outcomes, never mechanisms (its
+ * web/README.md), and this card follows the same rule even though the
+ * patent reason for it is gone — no sensing method or component, no chip or
+ * part names, no pairing gesture, no named OS framework behind the blocking,
+ * no enclosure construction. Battery life, "patent pending", the store
+ * testing status and the engineering stack are fine.
+ */
+export const FEATURED: Project = {
+  id: 'foilet',
+  name: 'Foilet',
+  tagline: 'A small device and an app that break the scrolling habit, one place at a time',
+  description:
+    'A quick look at your phone has a way of becoming forty minutes, wherever you happen to ' +
+    'be. Foilet is for that habit, not for the phone: keep it with you, text, take the call — ' +
+    'only the apps you picked go quiet while the device sees you there, and they come back ' +
+    'the moment you leave. One device with a mode for each place, the toilet and the bed first ' +
+    'and more zones on the way. You decide how hard it pushes: a reminder every few minutes of ' +
+    'how long it has been, with nothing closed; a few minutes of scrolling first, then the ' +
+    'picked apps close; or the apps closed the moment you arrive. Beyond the device, the app ' +
+    'sets screen-time limits and schedules on its own, runs weekly contests with friends, and ' +
+    'keeps a log of every visit. A joint project I co-founded, patent pending; beta units are ' +
+    'in homes and both apps are in store testing.',
+  highlights: [
+    {
+      label: 'How hard it pushes',
+      text:
+        'Your call, per place. Reminders only — a silent note every few minutes of how long ' +
+        'you have been there. A few minutes of scrolling first, then the picked apps close. Or ' +
+        'closed on arrival, for people who know what they are like. Everything else on the ' +
+        'phone keeps working. Once a block lands it holds through a force-quit and a settings ' +
+        'change, and an opt-in Hard Mode makes it harder still.',
+    },
+    {
+      label: 'The device',
+      text:
+        'Custom hardware, firmware and enclosure, designed in-house and now on production ' +
+        'plates. It talks only to the phones paired with it, from a few feet away, updates ' +
+        'itself over the air from the app, and runs for years on one coin cell. New zones ' +
+        'arrive as modes, not as new hardware.',
+    },
+    {
+      label: 'Households',
+      text:
+        'Several phones can share one device: it works out whose visit it is and tells exactly ' +
+        'one phone, each tuned to its own listening radius. Guests are never affected — only ' +
+        'a paired phone ever is.',
+    },
+    {
+      label: 'Beyond the device',
+      text:
+        'Pause before opening, daily limits and schedules run on the phone alone. Weekly ' +
+        'leaderboards reach across households, solo or in teams, up to 10,000 members — Total ' +
+        'toilet time, King of the Throne, Group Poop, bed contests, and screen-time games — with ' +
+        'invite links and a push when someone takes the lead.',
+    },
+    {
+      label: 'Your data',
+      text:
+        'No account. The device cannot reach the internet, and every visit is logged on the ' +
+        'phone — editable, with stats, CSV export and iCloud or Google backup. Nothing leaves ' +
+        'the phone unless you join a board.',
+    },
+    {
+      label: 'Built with',
+      text:
+        'Native iOS (Swift) and Android (Kotlin), feature for feature; embedded C firmware; ' +
+        'Supabase behind the boards, pushes and firmware delivery; TestFlight and Play builds ' +
+        'from CI; foilet.com on the same React, Vite and Netlify stack as this page. Foilet LLC.',
+    },
+  ],
+  tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'Supabase', 'React', 'GitHub Actions'],
+  link: 'https://foilet.com',
+  linkLabel: 'Visit foilet.com',
+  status: 'In beta',
+  demo: 'radius',
+};
+
+/**
  * Everything else — built for myself, and the reason the client work goes
  * fast. The playable cards live here.
  */
@@ -168,23 +255,6 @@ export const PROJECTS: Project[] = [
       'the whole thing from a phone over Tailscale. This site is maintained through it.',
     tech: ['Electron', 'React', 'Node.js', 'Claude', 'LLM Integrations'],
     status: 'In daily use',
-  },
-  {
-    id: 'foilet',
-    name: 'Foilet',
-    tagline: 'A phone blocker — from bare metal to the app stores',
-    description:
-      'Opt-in self-restriction for adults: a small BLE device locks your most distracting apps ' +
-      'while the toilet lid is up; a Bed Foilet is next on the same protocol. Built end to end — ' +
-      'embedded C firmware on a TI CC2340R5 with a 5+ year battery budget, custom PCB and enclosure, ' +
-      'over-the-air updates, a SwiftUI iOS app on the Screen Time API and its Kotlin Android twin — ' +
-      'plus a screen-time layer (pause before opening, daily limits, schedules, leaderboards) that ' +
-      'needs no device at all.',
-    tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'Supabase', 'GitHub Actions'],
-    link: 'https://foilet.com',
-    linkLabel: 'Visit foilet.com',
-    status: 'In beta',
-    demo: 'ble',
   },
   {
     id: 'nourishai',
