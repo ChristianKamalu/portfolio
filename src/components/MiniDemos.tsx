@@ -165,8 +165,9 @@ export function RadiusDemo() {
           </div>
         </div>
         <p className="radius-note">
-          The phone is you. Inside the boundary it&rsquo;s blocked; drag it, or widen the ring
-          until the next room counts. Everyone who uses the device sets their own.
+          The phone is you. Inside the boundary it&rsquo;s blocked. Drag it around, and widen
+          or tighten the boundary until it&rsquo;s where you want it. Everyone who uses the
+          device sets their own.
         </p>
       </div>
     </div>
