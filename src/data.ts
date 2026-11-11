@@ -157,24 +157,26 @@ export const CLIENT_SITES: Project[] = [
 export const FEATURED: Project = {
   id: 'foilet',
   name: 'Foilet',
-  tagline: 'One small device, one app, for the places your phone has no business being',
+  tagline: 'A small device and an app that break the scrolling habit, one place at a time',
   description:
-    'Foilet blocks the apps you pick in the places you pick ahead of time, and gives them back ' +
-    'the moment you leave. One device, with a mode for each place: on the toilet lid it knows ' +
-    'when the lid is up; on the nightstand it can tell the bed from the bedroom. Those two ship ' +
-    'first, with more zones on the way. Your phone decides ' +
-    'how hard it pushes — block on arrival, after a few minutes of grace, or never, with a quiet ' +
-    'note of how long you have been in there — and the same app runs screen-time limits, weekly ' +
-    'contests with friends and a visit log without any device at all. A joint project I ' +
-    'co-founded, patent pending; beta units are in bathrooms and both apps are in store testing.',
+    'You went in to do one thing, and forty minutes later you are still scrolling. Foilet is ' +
+    'for that habit, not for the phone: bring it in, text, take the call — only the apps you ' +
+    'picked go quiet, for as long as you are there, and they come back the moment you leave. ' +
+    'One device with a mode for each place, the toilet and the bed first and more zones on the ' +
+    'way. You decide how hard it pushes, from a quiet note of how long you have been in there, ' +
+    'to a few minutes of grace, to a block on arrival — and the same app runs screen-time ' +
+    'limits, weekly contests with friends and a visit log with no device at all. A joint ' +
+    'project I co-founded, patent pending; beta units are in bathrooms and both apps are in ' +
+    'store testing.',
   highlights: [
     {
-      label: 'The block',
+      label: 'How hard it pushes',
       text:
-        'Picked apps stop working while you are there and come back when you leave. Block at ' +
-        'once, after a grace period, or not at all — just silent reminders. It holds through a ' +
-        'force-quit and a settings change mid-block, with an opt-in Hard Mode for people who ' +
-        'know what they are like.',
+        'Your call, per place. Reminders only — a silent note every few minutes of how long ' +
+        'you have been there. A few minutes of scrolling first, then the picked apps close. Or ' +
+        'closed on arrival, for people who know what they are like. Everything else on the ' +
+        'phone keeps working. Once a block lands it holds through a force-quit and a settings ' +
+        'change, and an opt-in Hard Mode makes it harder still.',
     },
     {
       label: 'The device',

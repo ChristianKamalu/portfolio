@@ -30,7 +30,11 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   Keep it to one — two featured cards is just another grid — and keep it out
   of `PROJECTS` so it isn't rendered twice. Foilet is **one device with
   modes** (observation zones — toilet and bed first, more coming), not a
-  family of devices; don't write "devices" plural. It is a **joint project**
+  family of devices; don't write "devices" plural. The point is **breaking
+  the scrolling habit, not banning the phone** from a place: the phone is
+  welcome, only the picked apps go quiet, and the user sets how hard it
+  pushes — lead with that, not with "no phones here". It is a **joint
+  project**
   (co-founded; Foilet LLC): the copy never says one person built it — the
   one-person line belongs to the website work in About, not here. Foilet's
   own site describes **outcomes, never mechanisms** (`web/README.md` in the
