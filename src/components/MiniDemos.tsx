@@ -1,66 +1,109 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Icon, { type IconName } from './Icon';
 
-/* ── Foilet: the app's "Listening radius" page, redrawn. A toilet with the
-   radius as a disk on the floor — the ring passes behind the tank and in
-   front of the bowl — and the same Tighter / Standard / Wider slider. The
-   metres come from the app's own curve (an illustration there too, not a
-   measurement). Outcomes only: no signal numbers, no part names. ── */
+/* ── Foilet: the listening radius, live. The puck sits in the middle, this
+   phone wanders around it (or goes where you drag it), and the slider grows
+   or shrinks the boundary — inside it the phone is blocked, outside it is
+   not. Top-down and schematic on purpose: no toilet, no bed, no signal
+   numbers, no part names. ── */
 const RADIUS_MIN = 6;
 const RADIUS_MAX = 10;
 const RADIUS_STANDARD = 8;
-/** 0.45 m at the tight end, 1.2 m at the wide end — the app's curve. */
-const metres = (t: number) => 0.45 * Math.pow(10, (t - RADIUS_MIN) / 9.4);
-const SCALE_MAX = metres(RADIUS_MAX);
 
-/* The drawing's own space. The floor disk is centred on the toilet's base
-   and squashed to half height, as a disk on a floor reads from standing. */
-const CX = 180;
-const CY = 160;
-const PX_PER_METRE = 104;
+/* The map's own space. */
+const MAP_W = 360;
+const MAP_H = 250;
+const MAP_CX = 180;
+const MAP_CY = 125;
+/** Boundary radius per slider stop, in map units. */
+const boundaryFor = (t: number) => 34 + (t - RADIUS_MIN) * 20;
+const BOUNDARY_MAX = boundaryFor(RADIUS_MAX);
+/** Where the phone starts — outside, so first paint reads as "not blocked". */
+const PHONE_START = { x: 296, y: 72 };
+/** How long a drag keeps the wander paused, ms. */
+const DRAG_HOLD_MS = 4000;
+
+/** A slow figure that crosses in and out of every boundary size. */
+function wander(ms: number) {
+  const t = ms / 1000;
+  return {
+    x: MAP_CX + 140 * Math.sin(0.34 * t),
+    y: MAP_CY + 96 * Math.sin(0.47 * t + 1.1),
+  };
+}
 
 export function RadiusDemo() {
   const [tolerance, setTolerance] = useState(RADIUS_STANDARD);
-  const r = metres(tolerance) / SCALE_MAX; // 0..1 of the widest ring
-  const ringStyle = { ['--ring' as string]: r };
+  const [phone, setPhone] = useState(PHONE_START);
+  const [dragging, setDragging] = useState(false);
+  const lastDrag = useRef(0);
+
+  useEffect(() => {
+    // The wander is decoration, so it respects the OS motion setting; the
+    // drag still works without it.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      if (now - lastDrag.current > DRAG_HOLD_MS) setPhone(wander(now - start));
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const place = (e: React.PointerEvent<SVGSVGElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * MAP_W;
+    const y = ((e.clientY - rect.top) / rect.height) * MAP_H;
+    lastDrag.current = performance.now();
+    setPhone({ x: Math.max(8, Math.min(MAP_W - 8, x)), y: Math.max(8, Math.min(MAP_H - 8, y)) });
+  };
+
+  const boundary = boundaryFor(tolerance);
+  const inside = Math.hypot(phone.x - MAP_CX, phone.y - MAP_CY) <= boundary;
+  const ringStyle = { ['--ring' as string]: boundary / BOUNDARY_MAX };
 
   return (
     <div className="demo-box">
-      <div className="demo-label">Listening radius — this phone's, per device</div>
+      <div className="demo-label radius-head">
+        <span>Listening radius — this phone, live</span>
+        <span className={`radius-state ${inside ? 'blocked' : ''}`}>
+          <span className="radius-state-dot" />
+          {inside ? 'Blocked' : 'Not blocked'}
+        </span>
+      </div>
       <div className="radius-demo">
         <svg
-          className="radius-art"
-          viewBox="0 0 360 230"
+          className={`radius-map ${dragging ? 'dragging' : ''}`}
+          viewBox={`0 0 ${MAP_W} ${MAP_H}`}
           role="img"
-          aria-label="A toilet with this phone's listening radius drawn as a ring on the floor around it"
+          aria-label="A map: the Foilet in the middle, this phone moving around it, and the listening radius as a circle. Drag to move the phone."
+          onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); setDragging(true); place(e); }}
+          onPointerMove={(e) => { if (dragging) place(e); }}
+          onPointerUp={() => setDragging(false)}
+          onPointerCancel={() => setDragging(false)}
         >
-          <defs>
-            <clipPath id="radius-front">
-              <rect x="-20" y={CY} width="400" height="120" />
-            </clipPath>
-          </defs>
-          {/* The disk and the back half of the ring, behind the toilet. */}
+          {/* Range rings, for scale. */}
+          {[46, 92, 138].map((r) => (
+            <circle key={r} className="radius-range" cx={MAP_CX} cy={MAP_CY} r={r} />
+          ))}
+          {/* The boundary, drawn at its widest and scaled from the puck. */}
           <g className="radius-ring" style={ringStyle}>
-            <ellipse className="radius-fill" cx={CX} cy={CY} rx={PX_PER_METRE * SCALE_MAX} ry={PX_PER_METRE * SCALE_MAX * 0.5} />
-            <ellipse className="radius-stroke" cx={CX} cy={CY} rx={PX_PER_METRE * SCALE_MAX} ry={PX_PER_METRE * SCALE_MAX * 0.5} />
+            <circle className="radius-fill" cx={MAP_CX} cy={MAP_CY} r={BOUNDARY_MAX} />
+            <circle className="radius-stroke" cx={MAP_CX} cy={MAP_CY} r={BOUNDARY_MAX} />
           </g>
-          {/* The toilet: tank, lid, bowl, pedestal. Drawn once, in the
-              site's own greys, rather than the app's render. */}
-          <g className="radius-toilet">
-            <rect x="148" y="46" width="64" height="10" rx="3" className="radius-tank-lid" />
-            <rect x="152" y="56" width="56" height="58" rx="5" className="radius-tank" />
-            <rect x="158" y="63" width="12" height="3" rx="1.5" className="radius-lever" />
-            <path d="M152 124 C152 150 166 160 180 160 C194 160 208 150 208 124 Z" className="radius-bowl" />
-            <ellipse cx="180" cy="122" rx="30" ry="11" className="radius-seat" />
-            <ellipse cx="180" cy="121" rx="22" ry="7" className="radius-seat-inner" />
-            <path d="M170 156 L190 156 L194 172 L166 172 Z" className="radius-pedestal" />
-            <ellipse cx="180" cy="172" rx="16" ry="5" className="radius-base" />
+          {/* The puck, from above: a disc with its cap seam. */}
+          <g className="radius-puck">
+            <circle cx={MAP_CX} cy={MAP_CY} r="17" className="radius-puck-body" />
+            <circle cx={MAP_CX} cy={MAP_CY} r="11.5" className="radius-puck-cap" />
+            <circle cx={MAP_CX} cy={MAP_CY} r="2.2" className="radius-puck-mark" />
           </g>
-          {/* The front half of the ring, over the bowl. */}
-          <g clipPath="url(#radius-front)">
-            <g className="radius-ring" style={ringStyle}>
-              <ellipse className="radius-stroke" cx={CX} cy={CY} rx={PX_PER_METRE * SCALE_MAX} ry={PX_PER_METRE * SCALE_MAX * 0.5} />
-            </g>
+          {/* This phone. */}
+          <g className={`radius-phone ${inside ? 'blocked' : ''}`} transform={`translate(${phone.x} ${phone.y})`}>
+            <circle r="13" className="radius-phone-halo" />
+            <rect x="-5" y="-8.5" width="10" height="17" rx="2.5" className="radius-phone-body" />
+            <rect x="-3" y="-6" width="6" height="10" rx="1" className="radius-phone-screen" />
           </g>
         </svg>
         <div className="radius-slider">
@@ -80,7 +123,8 @@ export function RadiusDemo() {
           </div>
         </div>
         <p className="radius-note">
-          Inside the ring, this phone gets blocked. Everyone who uses the device sets their own.
+          The phone is you. Inside the boundary it&rsquo;s blocked; drag it, or widen the ring
+          until the next room counts. Everyone who uses the device sets their own.
         </p>
       </div>
     </div>

@@ -43,10 +43,12 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   gesture, no named OS framework behind the blocking, no enclosure
   construction or materials. Battery life, "patent pending", the store
   testing status and the engineering stack are fine to say. Its demo box
-  is the app's own "Listening radius" page redrawn (a toilet, a disk on the
-  floor, Tighter / Standard / Wider) — the owner chose that over a beacon
-  readout; the metres come from the app's illustrative curve, not a
-  measurement, and it shows no signal numbers.
+  is the listening radius, live: the puck in the middle, this phone
+  wandering around it (draggable), and a Tighter / Standard / Wider
+  boundary that decides whether the phone reads as blocked. The owner
+  asked for exactly that, with a plain puck rather than a toilet or a bed
+  — don't put furniture back in. It shows no signal numbers; the wander is
+  decoration and stops under prefers-reduced-motion, the drag does not.
 - All copy/content lives in `src/data.ts` (projects, experience, skills,
   links). Edit content there, not in components. The hover cross-highlight
   (`HighlightContext`) runs on project `tech` strings alone — hovering a chip
