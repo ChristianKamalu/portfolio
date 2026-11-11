@@ -163,11 +163,12 @@ export const FEATURED: Project = {
     'be. Foilet is for that habit, not for the phone: keep it with you, text, take the call — ' +
     'only the apps you picked go quiet while the device sees you there, and they come back ' +
     'the moment you leave. One device with a mode for each place, the toilet and the bed first ' +
-    'and more zones on the way. You decide how hard it pushes, from a quiet note of how long ' +
-    'it has been, to a few minutes of grace, to a block on arrival — and the same app runs ' +
-    'screen-time limits, weekly contests with friends and a visit log with no device at all. ' +
-    'A joint project I co-founded, patent pending; beta units are in homes and both apps are ' +
-    'in store testing.',
+    'and more zones on the way. You decide how hard it pushes: a reminder every few minutes of ' +
+    'how long it has been, with nothing closed; a few minutes of scrolling first, then the ' +
+    'picked apps close; or the apps closed the moment you arrive. Beyond the device, the app ' +
+    'sets screen-time limits and schedules on its own, runs weekly contests with friends, and ' +
+    'keeps a log of every visit. A joint project I co-founded, patent pending; beta units are ' +
+    'in homes and both apps are in store testing.',
   highlights: [
     {
       label: 'How hard it pushes',
