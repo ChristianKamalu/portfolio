@@ -705,18 +705,18 @@ section {
    transition moves fill and stroke together; the stroke keeps its width. */
 .radius-ring {
   transform: scale(var(--ring, 1));
-  transform-origin: 180px 112px;
+  transform-origin: 180px 125px;
   transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.3, 1.1);
 }
 .radius-fill { fill: rgba(139, 124, 248, 0.14); }
 .radius-stroke { fill: none; stroke: var(--violet); stroke-width: 2; vector-effect: non-scaling-stroke; }
-.radius-shadow { fill: rgba(0, 0, 0, 0.45); }
+.radius-shadow { fill: rgba(0, 0, 0, 0.5); }
 .radius-puck-name {
   fill: #3b86f7;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 1px;
+  font-size: 12.5px;
+  letter-spacing: 1.2px;
 }
 .radius-phone-halo { fill: var(--violet); opacity: 0; transition: opacity 0.2s ease; }
 .radius-phone.blocked .radius-phone-halo { opacity: 0.22; }

@@ -47,14 +47,13 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   wandering around it (draggable), and a Tighter / Standard / Wider
   boundary that decides whether the phone reads as blocked. The owner
   asked for exactly that, with the real puck rather than a toilet or a bed
-  — don't put furniture back in. The puck is `public/foilet-puck.svg`, the
-  apps' own device drawing from the Foilet repo's `brand/` folder with its
-  fill switched to white, with the brand mark and the name laid onto its
-  roof; the floor rings share its perspective. Foilet's site keeps
-  enclosure renders off the web, but this drawing is what the apps show
-  and the owner asked for it by name. It shows no signal numbers; the
-  wander is decoration and stops under prefers-reduced-motion, the drag
-  does not.
+  — don't put furniture back in. The puck is drawn **face on**, straight
+  from above: a white disc with one soft rolled edge (a radial gradient,
+  not stepped rings — the apps' angled device drawing was tried and the
+  owner disliked its halo lines), the brand mark from the Foilet repo's
+  `brand/foilet-mark.svg` and "Foilet" upright on its roof. It shows no
+  signal numbers; the wander is decoration and stops under
+  prefers-reduced-motion, the drag does not.
 - All copy/content lives in `src/data.ts` (projects, experience, skills,
   links). Edit content there, not in components. The hover cross-highlight
   (`HighlightContext`) runs on project `tech` strings alone — hovering a chip

@@ -4,33 +4,29 @@ import Icon, { type IconName } from './Icon';
 /* ── Foilet: the listening radius, live. The puck sits in the middle, this
    phone wanders around it (or goes where you drag it), and the slider grows
    or shrinks the boundary — inside it the phone is blocked, outside it is
-   not. The floor is drawn in the same 32° perspective as the puck drawing
-   the apps use (public/foilet-puck.svg, from the Foilet brand folder), so
-   the rings read as lying on the ground under it. No signal numbers. ── */
+   not. Straight down from above: the puck face on — a white disc with
+   its rolled edge, the brand mark and the name on its roof — and the
+   rings as plain circles around it. No signal numbers. ── */
 const RADIUS_MIN = 6;
 const RADIUS_MAX = 10;
 const RADIUS_STANDARD = 8;
 
-/* The map's own space. Floor coordinates are flattened by FLOOR on screen. */
+/* The map's own space. */
 const MAP_W = 360;
-const MAP_H = 210;
+const MAP_H = 250;
 const MAP_CX = 180;
-const MAP_CY = 112;
-const FLOOR = 0.53;
+const MAP_CY = 125;
 /** Boundary radius per slider stop, in floor units. */
 const boundaryFor = (t: number) => 36 + (t - RADIUS_MIN) * 20;
 const BOUNDARY_MAX = boundaryFor(RADIUS_MAX);
 /** Where the phone starts, in floor units — outside, so first paint reads
     as "not blocked". */
-const PHONE_START = { x: 122, y: -58 };
+const PHONE_START = { x: 118, y: -52 };
 /** How long a drag keeps the wander paused, ms. */
 const DRAG_HOLD_MS = 4000;
 
-/* The puck drawing: 52 × 36.83 units, its top face centred at (26, 11.79). */
-const PUCK_W = 92;
-const PUCK_S = PUCK_W / 52;
-const PUCK_H = 36.83 * PUCK_S;
-const PUCK_TOP = { x: 26 * PUCK_S, y: 11.79 * PUCK_S };
+/* The puck from above: a 50 mm disc, drawn at this radius. */
+const PUCK_R = 40;
 const BRAND_BLUE = '#3b86f7';
 
 /** A slow figure that crosses in and out of every boundary size. */
@@ -38,7 +34,7 @@ function wander(ms: number) {
   const t = ms / 1000;
   return {
     x: 142 * Math.sin(0.34 * t),
-    y: 118 * Math.sin(0.47 * t + 1.1),
+    y: 98 * Math.sin(0.47 * t + 1.1),
   };
 }
 
@@ -88,20 +84,17 @@ export function RadiusDemo() {
     lastDrag.current = performance.now();
     setPhone({
       x: Math.max(-MAP_CX + 10, Math.min(MAP_CX - 10, sx - MAP_CX)),
-      y: Math.max((-MAP_CY + 12) / FLOOR, Math.min((MAP_H - MAP_CY - 12) / FLOOR, (sy - MAP_CY) / FLOOR)),
+      y: Math.max(-MAP_CY + 12, Math.min(MAP_H - MAP_CY - 12, sy - MAP_CY)),
     });
   };
 
   const boundary = boundaryFor(tolerance);
   const inside = Math.hypot(phone.x, phone.y) <= boundary;
   const ringStyle = { ['--ring' as string]: boundary / BOUNDARY_MAX };
-  const phoneScreen = { x: MAP_CX + phone.x, y: MAP_CY + phone.y * FLOOR };
-  /* The phone passes behind the puck when it is further back on the floor. */
-  const phoneBehind = phone.y < -8;
+  const phoneScreen = { x: MAP_CX + phone.x, y: MAP_CY + phone.y };
 
   const phoneNode = (
     <g className={`radius-phone ${inside ? 'blocked' : ''}`} transform={`translate(${phoneScreen.x} ${phoneScreen.y})`}>
-      <ellipse cy="9" rx="8" ry="3" className="radius-shadow" />
       <circle r="13" className="radius-phone-halo" />
       <rect x="-5" y="-8.5" width="10" height="17" rx="2.5" className="radius-phone-body" />
       <rect x="-3" y="-6" width="6" height="10" rx="1" className="radius-phone-screen" />
@@ -122,39 +115,38 @@ export function RadiusDemo() {
           className={`radius-map ${dragging ? 'dragging' : ''}`}
           viewBox={`0 0 ${MAP_W} ${MAP_H}`}
           role="img"
-          aria-label="A map: the Foilet in the middle, this phone moving around it, and the listening radius as a ring on the floor. Drag to move the phone."
+          aria-label="A map from above: the Foilet in the middle, this phone moving around it, and the listening radius as a circle. Drag to move the phone."
           onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); setDragging(true); place(e); }}
           onPointerMove={(e) => { if (dragging) place(e); }}
           onPointerUp={() => setDragging(false)}
           onPointerCancel={() => setDragging(false)}
         >
+          <defs>
+            {/* One soft rolled edge: white across the roof, shading at the rim. */}
+            <radialGradient id="radius-puck-shade" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stopColor="#ffffff" />
+              <stop offset="0.78" stopColor="#ffffff" />
+              <stop offset="0.92" stopColor="#e4e8ef" />
+              <stop offset="1" stopColor="#b9c0cc" />
+            </radialGradient>
+          </defs>
           {/* Range rings, for scale. */}
           {[50, 100, 150].map((r) => (
-            <ellipse key={r} className="radius-range" cx={MAP_CX} cy={MAP_CY} rx={r} ry={r * FLOOR} />
+            <circle key={r} className="radius-range" cx={MAP_CX} cy={MAP_CY} r={r} />
           ))}
           {/* The boundary, drawn at its widest and scaled from the puck. */}
           <g className="radius-ring" style={ringStyle}>
-            <ellipse className="radius-fill" cx={MAP_CX} cy={MAP_CY} rx={BOUNDARY_MAX} ry={BOUNDARY_MAX * FLOOR} />
-            <ellipse className="radius-stroke" cx={MAP_CX} cy={MAP_CY} rx={BOUNDARY_MAX} ry={BOUNDARY_MAX * FLOOR} />
+            <circle className="radius-fill" cx={MAP_CX} cy={MAP_CY} r={BOUNDARY_MAX} />
+            <circle className="radius-stroke" cx={MAP_CX} cy={MAP_CY} r={BOUNDARY_MAX} />
           </g>
-          {phoneBehind && phoneNode}
-          {/* The puck, as the apps draw it, with the mark and the name on
-              its roof — laid flat into the same perspective. */}
+          {/* The puck, face on: the white disc, the mark, the name. */}
           <g className="radius-puck">
-            <ellipse cx={MAP_CX} cy={MAP_CY + 8} rx={PUCK_W * 0.4} ry={PUCK_W * 0.4 * FLOOR} className="radius-shadow" />
-            <image
-              href="/foilet-puck.svg"
-              x={MAP_CX - PUCK_TOP.x}
-              y={MAP_CY - 10 - PUCK_TOP.y}
-              width={PUCK_W}
-              height={PUCK_H}
-            />
-            <g transform={`translate(${MAP_CX} ${MAP_CY - 10}) scale(1 ${FLOOR})`}>
-              <FoiletMark x={-15} y={-23} width={30} />
-              <text y="18" className="radius-puck-name" textAnchor="middle">Foilet</text>
-            </g>
+            <circle cx={MAP_CX} cy={MAP_CY + 3} r={PUCK_R + 2} className="radius-shadow" />
+            <circle cx={MAP_CX} cy={MAP_CY} r={PUCK_R} fill="url(#radius-puck-shade)" />
+            <FoiletMark x={MAP_CX - 18} y={MAP_CY - 26} width={36} />
+            <text x={MAP_CX} y={MAP_CY + 20} className="radius-puck-name" textAnchor="middle">Foilet</text>
           </g>
-          {!phoneBehind && phoneNode}
+          {phoneNode}
         </svg>
         <div className="radius-slider">
           <input
