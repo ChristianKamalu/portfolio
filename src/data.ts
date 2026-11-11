@@ -99,6 +99,8 @@ export interface Project {
   status?: string;
   /** which mini-interaction the card renders */
   demo?: 'bank' | 'boggle' | 'ble' | 'nourish';
+  /** Only the featured card renders these — one row per layer of the build. */
+  highlights?: { label: string; text: string }[];
 }
 
 /**
@@ -138,6 +140,64 @@ export const CLIENT_SITES: Project[] = [
 ];
 
 /**
+ * The one build promoted above the Workshop grid, full width, with a row per
+ * layer. It is the deepest proof of the "and apps" half of the pitch: a
+ * product with its own hardware, firmware, two phone apps, a backend and a
+ * site, and it is live. Keep this to a single project — two featured cards
+ * is just another grid.
+ */
+export const FEATURED: Project = {
+  id: 'foilet',
+  name: 'Foilet',
+  tagline: 'A phone blocker with its own hardware — from bare metal to the app stores',
+  description:
+    'Opt-in self-restriction for adults. A small Bluetooth device on the toilet lid locks your ' +
+    'most distracting apps while the lid is up, and a screen-time layer in the same app — pause ' +
+    'before opening, daily limits, schedules, leaderboards with friends — works with no device at ' +
+    'all. A Bed Foilet is next on the same protocol. Every layer below was built by one person, ' +
+    'and beta units are in bathrooms now.',
+  highlights: [
+    {
+      label: 'Hardware',
+      text:
+        'A custom PCB around a certified TI CC2340R5 module, an accelerometer for the lid and ' +
+        'a piezo for feedback, in a snap-fit enclosure printed today and drawn for injection molding.',
+    },
+    {
+      label: 'Firmware',
+      text:
+        'Embedded C on the SimpleLink SDK. A deep-sleep power model with a 5+ year battery ' +
+        'budget, and signed over-the-air updates in dev and production flavors.',
+    },
+    {
+      label: 'iOS',
+      text:
+        'Swift and SwiftUI on the Screen Time API. AccessorySetupKit pairing, a live countdown ' +
+        'in the Dynamic Island, TestFlight builds from GitHub Actions.',
+    },
+    {
+      label: 'Android',
+      text: 'Kotlin and Jetpack Compose, feature for feature with iOS.',
+    },
+    {
+      label: 'Backend',
+      text:
+        'Supabase for leaderboards, push notifications, beta telemetry and firmware hosting. ' +
+        'Blocking never needs a connection; the server is dumb storage.',
+    },
+    {
+      label: 'Site',
+      text: 'foilet.com — React and Vite on Netlify, the same stack as this page.',
+    },
+  ],
+  tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'Supabase', 'React', 'GitHub Actions'],
+  link: 'https://foilet.com',
+  linkLabel: 'Visit foilet.com',
+  status: 'In beta',
+  demo: 'ble',
+};
+
+/**
  * Everything else — built for myself, and the reason the client work goes
  * fast. The playable cards live here.
  */
@@ -168,23 +228,6 @@ export const PROJECTS: Project[] = [
       'the whole thing from a phone over Tailscale. This site is maintained through it.',
     tech: ['Electron', 'React', 'Node.js', 'Claude', 'LLM Integrations'],
     status: 'In daily use',
-  },
-  {
-    id: 'foilet',
-    name: 'Foilet',
-    tagline: 'A phone blocker — from bare metal to the app stores',
-    description:
-      'Opt-in self-restriction for adults: a small BLE device locks your most distracting apps ' +
-      'while the toilet lid is up; a Bed Foilet is next on the same protocol. Built end to end — ' +
-      'embedded C firmware on a TI CC2340R5 with a 5+ year battery budget, custom PCB and enclosure, ' +
-      'over-the-air updates, a SwiftUI iOS app on the Screen Time API and its Kotlin Android twin — ' +
-      'plus a screen-time layer (pause before opening, daily limits, schedules, leaderboards) that ' +
-      'needs no device at all.',
-    tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'Supabase', 'GitHub Actions'],
-    link: 'https://foilet.com',
-    linkLabel: 'Visit foilet.com',
-    status: 'In beta',
-    demo: 'ble',
   },
   {
     id: 'nourishai',

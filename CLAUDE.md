@@ -23,7 +23,12 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
 - `CLIENT_SITES` (paid work, leads the Projects section) and `PROJECTS`
   (personal builds) are separate arrays of the same `Project` type. Client
   cards are the proof behind the pitch, so every `link` there must stay live —
-  a dead link is worse than no card.
+  a dead link is worse than no card. `FEATURED` is one more `Project`, shown
+  full width between the two with a row per layer (`highlights`): it is
+  Foilet, because a product with its own hardware, firmware, two phone apps
+  and a backend is the deepest proof of the "and apps" half of the pitch.
+  Keep it to one — two featured cards is just another grid — and keep it out
+  of `PROJECTS` so it isn't rendered twice.
 - All copy/content lives in `src/data.ts` (projects, experience, skills,
   links). Edit content there, not in components. The hover cross-highlight
   (`HighlightContext`) runs on project `tech` strings alone — hovering a chip
