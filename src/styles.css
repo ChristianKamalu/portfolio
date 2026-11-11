@@ -715,8 +715,8 @@ section {
   fill: #3b86f7;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 12.5px;
-  letter-spacing: 1.2px;
+  font-size: 9px;
+  letter-spacing: 0.8px;
 }
 .radius-phone-halo { fill: var(--violet); opacity: 0; transition: opacity 0.2s ease; }
 .radius-phone.blocked .radius-phone-halo { opacity: 0.22; }

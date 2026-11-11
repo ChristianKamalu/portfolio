@@ -26,7 +26,7 @@ const PHONE_START = { x: 118, y: -52 };
 const DRAG_HOLD_MS = 4000;
 
 /* The puck from above: a 50 mm disc, drawn at this radius. */
-const PUCK_R = 40;
+const PUCK_R = 27;
 const BRAND_BLUE = '#3b86f7';
 
 /** A slow figure that crosses in and out of every boundary size. */
@@ -143,8 +143,8 @@ export function RadiusDemo() {
           <g className="radius-puck">
             <circle cx={MAP_CX} cy={MAP_CY + 3} r={PUCK_R + 2} className="radius-shadow" />
             <circle cx={MAP_CX} cy={MAP_CY} r={PUCK_R} fill="url(#radius-puck-shade)" />
-            <FoiletMark x={MAP_CX - 18} y={MAP_CY - 26} width={36} />
-            <text x={MAP_CX} y={MAP_CY + 20} className="radius-puck-name" textAnchor="middle">Foilet</text>
+            <FoiletMark x={MAP_CX - 12} y={MAP_CY - 18} width={24} />
+            <text x={MAP_CX} y={MAP_CY + 11} className="radius-puck-name" textAnchor="middle">Foilet</text>
           </g>
           {phoneNode}
         </svg>
