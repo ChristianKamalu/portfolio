@@ -142,52 +142,74 @@ export const CLIENT_SITES: Project[] = [
 /**
  * The one build promoted above the Workshop grid, full width, with a row per
  * layer. It is the deepest proof of the "and apps" half of the pitch: a
- * product with its own hardware, firmware, two phone apps, a backend and a
- * site, and it is live. Keep this to a single project — two featured cards
- * is just another grid.
+ * product line with its own hardware, firmware, two phone apps, a backend
+ * and a site, and it is live. Keep this to a single project — two featured
+ * cards is just another grid.
+ *
+ * Disclosure: foilet.com describes outcomes, never mechanisms (its
+ * web/README.md), and this card follows the same rule even though the
+ * patent reason for it is gone — no sensing method or component, no chip or
+ * part names, no pairing gesture, no named OS framework behind the blocking,
+ * no enclosure construction. Battery life, "patent pending", the store
+ * testing status and the engineering stack are fine.
  */
 export const FEATURED: Project = {
   id: 'foilet',
   name: 'Foilet',
-  tagline: 'A phone blocker with its own hardware — from bare metal to the app stores',
+  tagline: 'One app and a family of small devices for the places your phone has no business being',
   description:
-    'Opt-in self-restriction for adults. A small Bluetooth device on the toilet lid locks your ' +
-    'most distracting apps while the lid is up, and a screen-time layer in the same app — pause ' +
-    'before opening, daily limits, schedules, leaderboards with friends — works with no device at ' +
-    'all. A Bed Foilet is next on the same protocol. A joint project, built end to end across ' +
-    'every layer below — and beta units are in bathrooms now.',
+    'Foilet blocks the apps you pick in the places you pick ahead of time, and gives them back ' +
+    'the moment you leave. Toilet Foilet sticks to the lid and runs for years on a coin cell; ' +
+    'Bed Foilet sits on the nightstand and can tell the bed from the bedroom. Your phone decides ' +
+    'how hard it pushes — block on arrival, after a few minutes of grace, or never, with a quiet ' +
+    'note of how long you have been in there — and the same app runs screen-time limits, weekly ' +
+    'contests with friends and a visit log without any device at all. A joint project I ' +
+    'co-founded, patent pending; beta units are in bathrooms and both apps are in store testing.',
   highlights: [
     {
-      label: 'Hardware',
+      label: 'The block',
       text:
-        'A custom PCB around a certified TI CC2340R5 module, an accelerometer for the lid and ' +
-        'a piezo for feedback, in a snap-fit enclosure printed today and drawn for injection molding.',
+        'Picked apps stop working while you are there and come back when you leave. Block at ' +
+        'once, after a grace period, or not at all — just silent reminders. It holds through a ' +
+        'force-quit and a settings change mid-block, with an opt-in Hard Mode for people who ' +
+        'know what they are like.',
     },
     {
-      label: 'Firmware',
+      label: 'The devices',
       text:
-        'Embedded C on the SimpleLink SDK. A deep-sleep power model with a 5+ year battery ' +
-        'budget, and signed over-the-air updates in dev and production flavors.',
+        'Custom hardware, firmware and enclosure, designed in-house and now on production ' +
+        'plates. A device talks only to the phones paired with it, from a few feet away, and ' +
+        'updates itself over the air from the app. Years on one coin cell; the bed version runs ' +
+        'on USB-C.',
     },
     {
-      label: 'iOS',
+      label: 'Households',
       text:
-        'Swift and SwiftUI on the Screen Time API. AccessorySetupKit pairing, a live countdown ' +
-        'in the Dynamic Island, TestFlight builds from GitHub Actions.',
+        'Several phones can share one device: it works out whose visit it is and tells exactly ' +
+        'one phone, each tuned to its own listening radius. Guests are never affected — only ' +
+        'a paired phone ever is.',
     },
     {
-      label: 'Android',
-      text: 'Kotlin and Jetpack Compose, feature for feature with iOS.',
-    },
-    {
-      label: 'Backend',
+      label: 'Beyond the device',
       text:
-        'Supabase for leaderboards, push notifications, beta telemetry and firmware hosting. ' +
-        'Blocking never needs a connection; the server is dumb storage.',
+        'Pause before opening, daily limits and schedules run on the phone alone. Weekly ' +
+        'leaderboards reach across households, solo or in teams, up to 10,000 members — Total ' +
+        'toilet time, King of the Throne, Group Poop, bed contests, and screen-time games — with ' +
+        'invite links and a push when someone takes the lead.',
     },
     {
-      label: 'Site',
-      text: 'foilet.com — React and Vite on Netlify, the same stack as this page.',
+      label: 'Your data',
+      text:
+        'No account. The device cannot reach the internet, and every visit is logged on the ' +
+        'phone — editable, with stats, CSV export and iCloud or Google backup. Nothing leaves ' +
+        'the phone unless you join a board.',
+    },
+    {
+      label: 'Built with',
+      text:
+        'Native iOS (Swift) and Android (Kotlin), feature for feature; embedded C firmware; ' +
+        'Supabase behind the boards, pushes and firmware delivery; TestFlight and Play builds ' +
+        'from CI; foilet.com on the same React, Vite and Netlify stack as this page. Foilet LLC.',
     },
   ],
   tech: ['Embedded C', 'BLE', 'SwiftUI', 'Kotlin', 'Supabase', 'React', 'GitHub Actions'],

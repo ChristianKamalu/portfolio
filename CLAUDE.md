@@ -28,9 +28,15 @@ react/react-dom — keep it that way; animations are hand-rolled CSS.
   Foilet, because a product with its own hardware, firmware, two phone apps
   and a backend is the deepest proof of the "and apps" half of the pitch.
   Keep it to one — two featured cards is just another grid — and keep it out
-  of `PROJECTS` so it isn't rendered twice. Foilet is a **joint project**:
-  the copy says "built end to end", never "built by one person" — the
-  one-person line belongs to the website work in About, not here.
+  of `PROJECTS` so it isn't rendered twice. Foilet is a **joint project**
+  (co-founded; Foilet LLC): the copy never says one person built it — the
+  one-person line belongs to the website work in About, not here. Foilet's
+  own site describes **outcomes, never mechanisms** (`web/README.md` in the
+  Foilet repo), and this card keeps to that even though the patent reason is
+  gone: no sensing method or component, no chip or part names, no pairing
+  gesture, no named OS framework behind the blocking, no enclosure
+  construction or materials. Battery life, "patent pending", the store
+  testing status and the engineering stack are fine to say.
 - All copy/content lives in `src/data.ts` (projects, experience, skills,
   links). Edit content there, not in components. The hover cross-highlight
   (`HighlightContext`) runs on project `tech` strings alone — hovering a chip

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import Icon, { type IconName } from './Icon';
 
-/* ── BLE: a beacon chip advertising on a slow interval ── */
+/* ── BLE: a Foilet waking on a lid event, on a slow loop. Outcomes only —
+   no part names, no real intervals — see FEATURED in data.ts. ── */
 export function BleDemo() {
   const [packets, setPackets] = useState(0);
   useEffect(() => {
@@ -10,17 +11,17 @@ export function BleDemo() {
   }, []);
   return (
     <div className="demo-box">
-      <div className="demo-label">Live-ish — advertising every 2.4s</div>
+      <div className="demo-label">Live-ish — a lid lifts every 2.4s</div>
       <div className="ble-demo">
         <div className="ble-stage" aria-hidden="true">
           <span className="ble-ring" style={{ ['--ring-delay' as string]: '0s' }} />
           <span className="ble-ring" style={{ ['--ring-delay' as string]: '0.35s' }} />
-          <div className="ble-chip">CC2340</div>
+          <div className="ble-chip">FOILET</div>
         </div>
         <div className="ble-readout">
-          <div>state: <span className="sleep">deep sleep</span> → <span className="val">ADV</span></div>
-          <div>packets sent: <span className="val">{packets}</span></div>
-          <div>battery budget: <span className="val">5+ years</span></div>
+          <div>state: <span className="sleep">asleep</span> → <span className="val">lid open</span></div>
+          <div>visits reported: <span className="val">{packets}</span></div>
+          <div>battery: <span className="val">years, one coin cell</span></div>
         </div>
       </div>
     </div>
