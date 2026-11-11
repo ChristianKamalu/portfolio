@@ -154,8 +154,8 @@ export const FEATURED: Project = {
     'Opt-in self-restriction for adults. A small Bluetooth device on the toilet lid locks your ' +
     'most distracting apps while the lid is up, and a screen-time layer in the same app — pause ' +
     'before opening, daily limits, schedules, leaderboards with friends — works with no device at ' +
-    'all. A Bed Foilet is next on the same protocol. Every layer below was built by one person, ' +
-    'and beta units are in bathrooms now.',
+    'all. A Bed Foilet is next on the same protocol. A joint project, built end to end across ' +
+    'every layer below — and beta units are in bathrooms now.',
   highlights: [
     {
       label: 'Hardware',
