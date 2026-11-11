@@ -161,7 +161,7 @@ export const FEATURED: Project = {
   description:
     'A quick look at your phone has a way of becoming forty minutes, wherever you happen to ' +
     'be. Foilet is for that habit, not for the phone: keep it with you, text, take the call — ' +
-    'only the apps you picked go quiet while you are in a place you chose, and they come back ' +
+    'only the apps you picked go quiet while the device sees you there, and they come back ' +
     'the moment you leave. One device with a mode for each place, the toilet and the bed first ' +
     'and more zones on the way. You decide how hard it pushes, from a quiet note of how long ' +
     'it has been, to a few minutes of grace, to a block on arrival — and the same app runs ' +
