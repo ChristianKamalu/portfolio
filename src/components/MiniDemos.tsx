@@ -19,9 +19,13 @@ const MAP_CY = 125;
 /** Boundary radius per slider stop, in floor units. */
 const boundaryFor = (t: number) => 36 + (t - RADIUS_MIN) * 20;
 const BOUNDARY_MAX = boundaryFor(RADIUS_MAX);
-/** Where the phone starts, in floor units — outside, so first paint reads
-    as "not blocked". */
-const PHONE_START = { x: 118, y: -52 };
+/** The wander's phase at first paint, ms. The wander picks up from here, so
+    the phone doesn't jump when JavaScript arrives. */
+const WANDER_START_MS = 2900;
+/** wander(WANDER_START_MS), rounded and written out as a constant so the
+    prerender and hydration agree. Outside even the widest boundary, so
+    first paint reads as "not blocked". */
+const PHONE_START = { x: 118, y: 62 };
 /** How long a drag keeps the wander paused, ms. */
 const DRAG_HOLD_MS = 4000;
 
@@ -62,19 +66,28 @@ export function RadiusDemo() {
   const [phone, setPhone] = useState(PHONE_START);
   const [dragging, setDragging] = useState(false);
   const lastDrag = useRef(0);
+  const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // The wander is decoration, so it respects the OS motion setting; the
     // drag still works without it.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const box = boxRef.current;
+    if (!box) return;
     let raf = 0;
-    const start = performance.now();
+    const start = performance.now() - WANDER_START_MS;
     const tick = (now: number) => {
       if (now - lastDrag.current > DRAG_HOLD_MS) setPhone(wander(now - start));
       raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    // Only run while the demo is on screen: re-rendering the map every
+    // frame for a card nobody can see is battery spent for nothing.
+    const io = new IntersectionObserver(([entry]) => {
+      cancelAnimationFrame(raf);
+      raf = entry.isIntersecting ? requestAnimationFrame(tick) : 0;
+    });
+    io.observe(box);
+    return () => { io.disconnect(); cancelAnimationFrame(raf); };
   }, []);
 
   const place = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -102,7 +115,7 @@ export function RadiusDemo() {
   );
 
   return (
-    <div className="demo-box">
+    <div className="demo-box" ref={boxRef}>
       <div className="demo-label radius-head">
         <span>Listening radius — this phone, live</span>
         <span className={`radius-state ${inside ? 'blocked' : ''}`}>
