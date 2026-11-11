@@ -159,15 +159,15 @@ export const FEATURED: Project = {
   name: 'Foilet',
   tagline: 'A small device and an app that break the scrolling habit, one place at a time',
   description:
-    'You went in to do one thing, and forty minutes later you are still scrolling. Foilet is ' +
-    'for that habit, not for the phone: bring it in, text, take the call — only the apps you ' +
-    'picked go quiet, for as long as you are there, and they come back the moment you leave. ' +
-    'One device with a mode for each place, the toilet and the bed first and more zones on the ' +
-    'way. You decide how hard it pushes, from a quiet note of how long you have been in there, ' +
-    'to a few minutes of grace, to a block on arrival — and the same app runs screen-time ' +
-    'limits, weekly contests with friends and a visit log with no device at all. A joint ' +
-    'project I co-founded, patent pending; beta units are in bathrooms and both apps are in ' +
-    'store testing.',
+    'A quick look at your phone has a way of becoming forty minutes, wherever you happen to ' +
+    'be. Foilet is for that habit, not for the phone: keep it with you, text, take the call — ' +
+    'only the apps you picked go quiet while you are in a place you chose, and they come back ' +
+    'the moment you leave. One device with a mode for each place, the toilet and the bed first ' +
+    'and more zones on the way. You decide how hard it pushes, from a quiet note of how long ' +
+    'it has been, to a few minutes of grace, to a block on arrival — and the same app runs ' +
+    'screen-time limits, weekly contests with friends and a visit log with no device at all. ' +
+    'A joint project I co-founded, patent pending; beta units are in homes and both apps are ' +
+    'in store testing.',
   highlights: [
     {
       label: 'How hard it pushes',
